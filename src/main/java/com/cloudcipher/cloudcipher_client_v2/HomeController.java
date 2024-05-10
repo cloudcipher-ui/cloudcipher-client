@@ -43,4 +43,11 @@ public class HomeController implements Initializable {
         registerController.setHomeController(this);
         cloudStoragePane.getChildren().add(view);
     }
+
+    public void loadFileView() throws IOException {
+        cloudStoragePane.getChildren().clear();
+        FXMLLoader fxmlLoader = new FXMLLoader(CloudCipherClient.class.getResource("file/file-view.fxml"));
+        Parent view = fxmlLoader.load();
+        cloudStoragePane.getChildren().add(view);
+    }
 }

@@ -63,6 +63,11 @@ public class LoginController {
             AuthenticationResponse result = loginTask.getValue();
             Globals.setUsername(result.getUsername());
             Globals.setToken(result.getToken());
+            try {
+                homeController.loadFileView();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         });
 
         loginTask.setOnFailed(event -> {

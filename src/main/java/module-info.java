@@ -25,5 +25,6 @@ module com.cloudcipher.cloudcipher_client_v2 {
     opens com.cloudcipher.cloudcipher_client_v2.authentication.model to javafx.fxml;
     exports com.cloudcipher.cloudcipher_client_v2.authentication.model;
 
-
+    opens com.cloudcipher.cloudcipher_client_v2.file to javafx.fxml;
+    exports com.cloudcipher.cloudcipher_client_v2.file;
 }
