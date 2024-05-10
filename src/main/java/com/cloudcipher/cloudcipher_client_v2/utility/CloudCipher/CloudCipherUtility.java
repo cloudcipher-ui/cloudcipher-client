@@ -1,4 +1,4 @@
-package com.cloudcipher.cloudcipher_client_v2.utility;
+package com.cloudcipher.cloudcipher_client_v2.utility.CloudCipher;
 
 import java.security.SecureRandom;
 
@@ -6,7 +6,7 @@ public class CloudCipherUtility {
     AONTH aonth;
     Permutation perm;
     KeyGenerator g;
-    int[] iv;
+    public int[] iv;
     long time1 = 0;
     long time2 = 0;
     long time3 = 0;
@@ -20,7 +20,7 @@ public class CloudCipherUtility {
         iv = new int[16];
     }
 
-    long[][] encrypt(int[] k1, int[] k2, int[] k3, int ctr, long[][] m) throws Exception {
+    public long[][] encrypt(int[] k1, int[] k2, int[] k3, int ctr, long[][] m) throws Exception {
         // (P1, P2, P3) = G(0, K1, K2, K3, l, n)
         int[][] p = g.generate(false, k1, k2, k3, m.length);
 
@@ -96,7 +96,7 @@ public class CloudCipherUtility {
         return res;
     }
 
-    long[][] decrypt(int[] k1, int[] k2, int[] k3, int ctr, long[][] c) throws Exception {
+    public long[][] decrypt(int[] k1, int[] k2, int[] k3, int ctr, long[][] c) throws Exception {
         // (P1, P2, P3) = G(0, K1, K2, K3, l, n)
         int[][] p = g.generate(false, k1, k2, k3, c.length - 1);
 
@@ -113,7 +113,7 @@ public class CloudCipherUtility {
 
         // m''[i] = DP (c[i] xor PE (c[i − 1][1...l], P2), P1)
         int[] x = new int[16];
-        int[] y = new int[16];
+        int[] y;
         int[][] mBytes = new int[cBytes.length - 1][16];
         for (int i = cBytes.length - 1; i > 0; i--) {
             y = perm.permutation(cBytes[i - 1], p[1]);
@@ -125,7 +125,7 @@ public class CloudCipherUtility {
 
         // m'[n + 1] = DP (c[0][1...l] xor PE (iv[1...l], P2), P1)
         int[] permuted2 = perm.permutation(iv, p[1]);
-        int[] mAONTHBytes = new int[16];
+        int[] mAONTHBytes;
         int[] permuted1 = new int[16];
         for (int i = 0; i < 16; i++) {
             permuted1[i] = cBytes[0][i] ^ permuted2[i];
@@ -156,11 +156,10 @@ public class CloudCipherUtility {
         }
 
         // m[1]...m[n] = D-AONTH(ctr, m'[1]...m'[n + 1])
-        long[][] m = aonth.Daonth(ctr, mAONTH);
-        return m;
+        return aonth.Daonth(ctr, mAONTH);
     }
 
-    long[][] reEncrypt(int[] ck1, int[] k2, int[] k2Random, int[] ck3, long[][] c) throws Exception {
+    public long[][] reEncrypt(int[] ck1, int[] k2, int[] k2Random, int[] ck3, long[][] c) throws Exception {
         // P2 = PG (l, K2), P2' = PG(l, K2')
         long start = System.nanoTime();
         byte[] tempKey = new byte[16];
@@ -185,7 +184,7 @@ public class CloudCipherUtility {
             }
         }
         int[][] cPermutedBytes = new int[c.length - 1][16];
-        int[] temp1 = new int[16];
+        int[] temp1;
         int[] temp2 = new int[16];
         // c'[i] = PE (c[i] xor PE (c[i − 1][1...l], P2), CK1)
         for (int i = cBytes.length - 1; i > 0; i--) {

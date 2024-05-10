@@ -1,4 +1,4 @@
-package com.cloudcipher.cloudcipher_client_v2.utility;
+package com.cloudcipher.cloudcipher_client_v2.utility.CloudCipher;
 
 class QuickSort
 { 

@@ -3,7 +3,7 @@ package com.cloudcipher.cloudcipher_client_v2.file.tasks;
 import com.cloudcipher.cloudcipher_client_v2.Globals;
 import com.cloudcipher.cloudcipher_client_v2.utility.ConversionUtility;
 import com.cloudcipher.cloudcipher_client_v2.utility.CryptoUtility;
-import com.cloudcipher.cloudcipher_client_v2.utility.EncryptionResult;
+import com.cloudcipher.cloudcipher_client_v2.file.model.EncryptionResult;
 import com.cloudcipher.cloudcipher_client_v2.utility.FileUtility;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;

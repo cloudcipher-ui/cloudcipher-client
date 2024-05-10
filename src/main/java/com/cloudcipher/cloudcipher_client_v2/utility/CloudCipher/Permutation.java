@@ -1,4 +1,4 @@
-package com.cloudcipher.cloudcipher_client_v2.utility;
+package com.cloudcipher.cloudcipher_client_v2.utility.CloudCipher;
 
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;

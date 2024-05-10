@@ -1,5 +1,8 @@
 package com.cloudcipher.cloudcipher_client_v2.utility;
 
+import com.cloudcipher.cloudcipher_client_v2.utility.CloudCipher.CloudCipherUtility;
+import com.cloudcipher.cloudcipher_client_v2.file.model.EncryptionResult;
+
 import java.util.Arrays;
 
 public class CryptoUtility {
