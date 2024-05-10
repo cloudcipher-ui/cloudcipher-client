@@ -1,5 +1,7 @@
 package com.cloudcipher.cloudcipher_client_v2.utility;
 
+import java.util.Arrays;
+
 public class CryptoUtility {
     private static final int BLOCK_SIZE = 16;
     private static final int CTR = 0;
@@ -63,6 +65,57 @@ public class CryptoUtility {
             }
 
             return decryptedBytes;
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static EncryptionResult encrypt(byte[] fileBytes, int[][] key) {
+        int fileLength = fileBytes.length;
+        int numBlocks = fileLength / BLOCK_SIZE;
+        int remainder = fileLength % BLOCK_SIZE;
+
+        long[][] longs = new long[numBlocks + 1][2];
+
+        if (remainder != 0) {
+            byte[] padding = new byte[BLOCK_SIZE - remainder];
+            Arrays.fill(padding, (byte) (BLOCK_SIZE - remainder));
+
+            byte[] lastBlock = new byte[BLOCK_SIZE];
+            System.arraycopy(fileBytes, numBlocks * BLOCK_SIZE, lastBlock, 0, remainder);
+            System.arraycopy(padding, 0, lastBlock, remainder, padding.length);
+
+
+            // Convert last block to longs  (8 bytes chunks)
+            for (int j = 0; j < 2; j++) {
+                for (int k = 0; k < 8; k++) {
+                    longs[numBlocks][j] <<= 8;
+                    longs[numBlocks][j] |= (lastBlock[j * 8 + k] & 0xFF);
+                }
+            }
+        }
+
+        // Convert all blocks to longs  (8 bytes chunks)
+        for (int i = 0; i < numBlocks; i++) {
+            for (int j = 0; j < 2; j++) {
+                for (int k = 0; k < 8; k++) {
+                    longs[i][j] <<= 8;
+                    longs[i][j] |= (fileBytes[i * BLOCK_SIZE + j * 8 + k] & 0xFF);
+                }
+            }
+        }
+
+        try {
+            CloudCipherUtility cc = new CloudCipherUtility();
+            long[][] encrypted = cc.encrypt(key[0], key[1], key[2], CTR, longs);
+
+            byte[] iv = new byte[BLOCK_SIZE];
+            for (int i = 0; i < BLOCK_SIZE; i++) {
+                iv[i] = (byte) (cc.iv[i] & 0xFF);
+            }
+
+            return new EncryptionResult(encrypted, iv);
 
         } catch (Exception e) {
             throw new RuntimeException(e);

@@ -3,6 +3,7 @@ package com.cloudcipher.cloudcipher_client_v2.utility;
 import com.cloudcipher.cloudcipher_client_v2.Globals;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
@@ -48,5 +49,19 @@ public class FileUtility {
 
         size = Math.round(size * 100.0) / 100.0;
         return size + " " + sizeUnit;
+    }
+
+    public static byte[] readFile(File file) {
+        int fileLength = (int) file.length();
+        byte[] fileBytes = new byte[fileLength];
+        try (FileInputStream fis = new FileInputStream(file)) {
+            int read = fis.read(fileBytes);
+            if (read != fileLength) {
+                throw new IOException("File read error");
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return fileBytes;
     }
 }
