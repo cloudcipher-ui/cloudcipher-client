@@ -7,12 +7,18 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class HelloApplication extends Application {
+public class CloudCipherClient extends Application {
+    int WIDTH = 800;
+    int HEIGHT = 400;
+
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("hello-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 320, 240);
-        stage.setTitle("Hello!");
+        FXMLLoader fxmlLoader = new FXMLLoader(CloudCipherClient.class.getResource("home-view.fxml"));
+
+        Scene scene = new Scene(fxmlLoader.load(), WIDTH, HEIGHT);
+        stage.setResizable(false);
+
+        stage.setTitle("CloudCipher");
         stage.setScene(scene);
         stage.show();
     }
