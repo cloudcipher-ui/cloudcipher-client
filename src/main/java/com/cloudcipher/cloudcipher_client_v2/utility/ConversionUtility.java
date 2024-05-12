@@ -24,4 +24,23 @@ public class ConversionUtility {
         return fileBytes;
     }
 
+    public static String bytesToHex(byte[] bytes) {
+        StringBuilder sb = new StringBuilder();
+        for (byte b: bytes) {
+            sb.append(String.format("%02X", b));
+        }
+        return sb.toString();
+    }
+
+    public static byte[] hexToBytes(String hexString) {
+        int arrLength = hexString.length() / 2;
+        byte[] byteArray = new byte[arrLength];
+
+        for (int i = 0; i < arrLength; i++) {
+            int idx = i * 2;
+            int v = Integer.parseInt(hexString.substring(idx, idx + 2), 16);
+            byteArray[i] = (byte) v;
+        }
+        return byteArray;
+    }
 }

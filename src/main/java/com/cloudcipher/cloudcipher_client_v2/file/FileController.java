@@ -1,24 +1,25 @@
 package com.cloudcipher.cloudcipher_client_v2.file;
 
+import com.cloudcipher.cloudcipher_client_v2.CloudCipherClient;
 import com.cloudcipher.cloudcipher_client_v2.Globals;
 import com.cloudcipher.cloudcipher_client_v2.file.model.DownloadResponse;
 import com.cloudcipher.cloudcipher_client_v2.file.tasks.DeleteTask;
 import com.cloudcipher.cloudcipher_client_v2.file.tasks.DownloadTask;
 import com.cloudcipher.cloudcipher_client_v2.file.tasks.ListTask;
-import com.cloudcipher.cloudcipher_client_v2.file.tasks.UploadTask;
 import com.cloudcipher.cloudcipher_client_v2.file.view.InitialDirectoryDialog;
 import com.cloudcipher.cloudcipher_client_v2.utility.CryptoUtility;
 import com.cloudcipher.cloudcipher_client_v2.utility.FileUtility;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.stage.FileChooser;
 
-import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.Map;
@@ -36,28 +37,28 @@ public class FileController implements Initializable {
     private Label loadingError;
     @FXML
     private ProgressIndicator loadingSpinner;
-    @FXML
-    private Label fileNameLabel;
-    @FXML
-    private Label fileSizeLabel;
-    @FXML
-    private Button fileButton;
-    @FXML
-    private Button uploadButton;
 
-    private final FileChooser fileChooser = new FileChooser();
-    private String selectedFilePath;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        FXMLLoader fxmlLoader = new FXMLLoader(CloudCipherClient.class.getResource("file/side-menu-view.fxml"));
+        Parent view;
+        try {
+            view = fxmlLoader.load();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        SideFileMenuController sideFileMenuController = fxmlLoader.getController();
+        sideFileMenuController.setFileController(this);
+        contentPane.getChildren().add(0, view);
+
         refreshList();
         if (Globals.getDefaultDirectory() == null) {
             InitialDirectoryDialog.createAndShowInitialDirectoryDialog();
         }
-        fileChooser.setInitialDirectory(new File(Globals.getDefaultDirectory()));
     }
 
-    private void refreshList() {
+    void refreshList() {
         Task<List<Map<String, String>>> listTask = new ListTask(Globals.getUsername(), Globals.getToken());
         listTask.setOnSucceeded(event -> {
             List<Map<String, String>> result = listTask.getValue();
@@ -206,103 +207,4 @@ public class FileController implements Initializable {
         });
         return downloadItem;
     }
-
-    @FXML
-    protected void handleFileButtonClick() {
-        File file = fileChooser.showOpenDialog(fileButton.getScene().getWindow());
-        if (file != null) {
-            String fileName = file.getName();
-            double fileSize = file.length();
-            double max_file_size = 1024 * 1024 * 1024;
-            if (fileSize > max_file_size) {
-                fileNameLabel.setText(fileName);
-                fileNameLabel.setStyle("-fx-text-fill: red;");
-
-                fileSizeLabel.setText(FileUtility.parseFileSize(fileSize) + " is too large");
-            } else {
-                selectedFilePath = file.getAbsolutePath();
-                fileNameLabel.setText(fileName);
-                fileNameLabel.setStyle("-fx-text-fill: black;");
-
-                fileSizeLabel.setText(FileUtility.parseFileSize(fileSize));
-                fileSizeLabel.setStyle("-fx-text-fill: black;");
-
-                uploadButton.setDisable(false);
-                uploadButton.setVisible(true);
-                uploadButton.setManaged(true);
-                uploadButton.setFocusTraversable(true);
-
-                fileButton.setDisable(true);
-                fileButton.setVisible(false);
-                fileButton.setManaged(false);
-                fileButton.setFocusTraversable(false);
-            }
-
-            fileNameLabel.setVisible(true);
-            fileNameLabel.setManaged(true);
-
-            fileSizeLabel.setVisible(true);
-            fileSizeLabel.setManaged(true);
-        }
-    }
-
-    @FXML
-    protected void handleUploadButtonClick() {
-        File file = new File(selectedFilePath);
-        Task<String> uploadTask = new UploadTask(Globals.getUsername(), Globals.getToken(), file);
-        uploadTask.setOnSucceeded(event -> {
-            fileNameLabel.setText("File uploaded");
-            fileNameLabel.setStyle("-fx-text-fill: black;");
-
-            fileSizeLabel.setVisible(false);
-            fileSizeLabel.setManaged(false);
-
-            uploadButton.setVisible(false);
-            uploadButton.setManaged(false);
-            uploadButton.setFocusTraversable(false);
-
-            fileButton.setDisable(false);
-            fileButton.setVisible(true);
-            fileButton.setManaged(true);
-            fileButton.setFocusTraversable(true);
-
-            uploadButton.setGraphic(null);
-
-            refreshList();
-        });
-
-        uploadTask.setOnFailed(event -> {
-            fileNameLabel.setText(uploadTask.getException().getMessage());
-            fileNameLabel.setStyle("-fx-text-fill: red;");
-
-            fileSizeLabel.setVisible(false);
-            fileSizeLabel.setManaged(false);
-
-            uploadButton.setVisible(false);
-            uploadButton.setFocusTraversable(false);
-
-            fileButton.setDisable(false);
-            fileButton.setVisible(true);
-            fileButton.setFocusTraversable(true);
-
-            uploadButton.setGraphic(null);
-        });
-
-        ProgressIndicator uploadSpinner = new ProgressIndicator();
-        uploadSpinner.setVisible(true);
-        uploadSpinner.setManaged(true);
-        uploadSpinner.setProgress(-1);
-        uploadSpinner.setPrefSize(15, 15);
-
-        uploadButton.setGraphic(uploadSpinner);
-        uploadButton.setGraphicTextGap(5);
-
-        uploadButton.setDisable(true);
-        uploadButton.setOpacity(1);
-        uploadSpinner.setOpacity(1);
-
-        Thread thread = new Thread(uploadTask);
-        thread.start();
-    }
-
 }

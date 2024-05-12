@@ -1,5 +1,6 @@
 package com.cloudcipher.cloudcipher_client_v2;
 
+import com.cloudcipher.cloudcipher_client_v2.utility.FileUtility;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -13,6 +14,7 @@ public class CloudCipherClient extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
+        FileUtility.loadConfig();
         FXMLLoader fxmlLoader = new FXMLLoader(CloudCipherClient.class.getResource("home-view.fxml"));
 
         Scene scene = new Scene(fxmlLoader.load(), WIDTH, HEIGHT);

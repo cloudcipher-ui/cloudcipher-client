@@ -5,7 +5,6 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<?import javafx.scene.Cursor?>
 <AnchorPane prefHeight="400.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17.0.2-ea"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.cloudcipher.cloudcipher_client_v2.file.FileController">
@@ -19,27 +18,6 @@
         </Label>
     </VBox>
     <HBox fx:id="contentPane" prefHeight="400.0" prefWidth="800.0">
-        <VBox prefHeight="400.0" prefWidth="200" alignment="CENTER" spacing="8.0">
-            <Label fx:id="fileNameLabel" alignment="CENTER" disable="true" managed="false" textAlignment="CENTER"
-                   textOverrun="CENTER_WORD_ELLIPSIS" visible="false"/>
-            <Label fx:id="fileSizeLabel" alignment="CENTER" disable="true" layoutX="10.0" layoutY="54.0"
-                   managed="false" textAlignment="CENTER" textOverrun="CENTER_WORD_ELLIPSIS"
-                   visible="false"/>
-            <Button fx:id="fileButton" mnemonicParsing="false" onAction="#handleFileButtonClick" prefHeight="25.0"
-                    prefWidth="146.0" style="-fx-background-radius: 20;" text="Upload New File" textFill="#333333">
-                <cursor>
-                    <Cursor fx:constant="HAND"/>
-                </cursor>
-            </Button>
-            <Button fx:id="uploadButton" alignment="CENTER" disable="true" focusTraversable="false" layoutX="37.0"
-                    layoutY="29.0" managed="false" mnemonicParsing="false" onAction="#handleUploadButtonClick"
-                    prefHeight="25.0" prefWidth="146.0" style="-fx-background-radius: 20;"
-                    text="Upload" textAlignment="CENTER" visible="false">
-                <cursor>
-                    <Cursor fx:constant="HAND"/>
-                </cursor>
-            </Button>
-        </VBox>
         <GridPane prefHeight="400.0" prefWidth="600.0"
                   style="-fx-background-color: white; -fx-background-radius: 20 0 0 0; -fx-padding: 0 8;">
             <columnConstraints>

@@ -2,12 +2,13 @@ package com.cloudcipher.cloudcipher_client_v2.utility;
 
 import com.cloudcipher.cloudcipher_client_v2.Globals;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 
 public class FileUtility {
+
+    public static String getApplicationPath() {
+        return System.getProperty("user.home") + "/cloudcipher/";
+    }
 
     public static void saveDownload(byte[] fileBytes, String filename) {
         File downloadFile = new File(Globals.getDefaultDirectory() + "/" + filename);
@@ -63,5 +64,60 @@ public class FileUtility {
             throw new RuntimeException(e);
         }
         return fileBytes;
+    }
+
+    public static void saveConfig() throws IOException {
+        File configFile = new File(getApplicationPath() + "/config");
+        try (FileWriter writer = new FileWriter(configFile)) {
+            if (Globals.getDefaultDirectory() != null) {
+                writer.write("defaultDirectory=" + Globals.getDefaultDirectory() + "\n");
+            }
+            if (Globals.getUsername() != null) {
+                writer.write("username=" + Globals.getUsername() + "\n");
+            }
+            if (Globals.getToken() != null) {
+                writer.write("token=" + Globals.getToken() + "\n");
+            }
+        }
+    }
+
+    public static void loadConfig() throws IOException {
+        File configFile = new File(getApplicationPath() + "/config");
+        if (!configFile.exists()) {
+            return;
+        }
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(configFile))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split("=");
+                if (parts.length != 2) {
+                    throw new IOException("Invalid config file");
+                }
+
+                switch (parts[0]) {
+                    case "defaultDirectory":
+                        Globals.setDefaultDirectory(parts[1]);
+                        break;
+                    case "username":
+                        Globals.setUsername(parts[1]);
+                        break;
+                    case "token":
+                        Globals.setToken(parts[1]);
+                        break;
+                    default:
+                }
+            }
+        }
+    }
+
+    public static void loadSymmetricKey() throws IOException {
+        File keyFile = new File(getApplicationPath() + "/" + Globals.getUsername() + ".key");
+        if (!keyFile.exists()) {
+            return;
+        }
+
+        int[][] key = CryptoUtility.readSymmetricKey(keyFile);
+        Globals.setKey(key);
     }
 }

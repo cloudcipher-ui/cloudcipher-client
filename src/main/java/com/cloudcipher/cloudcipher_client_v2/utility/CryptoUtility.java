@@ -3,6 +3,8 @@ package com.cloudcipher.cloudcipher_client_v2.utility;
 import com.cloudcipher.cloudcipher_client_v2.utility.CloudCipher.CloudCipherUtility;
 import com.cloudcipher.cloudcipher_client_v2.file.model.EncryptionResult;
 
+import java.io.*;
+import java.security.SecureRandom;
 import java.util.Arrays;
 
 public class CryptoUtility {
@@ -122,6 +124,46 @@ public class CryptoUtility {
 
         } catch (Exception e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    public static int[][] generateSymmetricKey(String path) throws IOException {
+        SecureRandom random = new SecureRandom();
+        byte[] tempRandom1 = new byte[16];
+        byte[] tempRandom2 = new byte[16];
+        byte[] tempRandom3 = new byte[16];
+        random.nextBytes(tempRandom1);
+        random.nextBytes(tempRandom2);
+        random.nextBytes(tempRandom3);
+
+        try (FileWriter writer = new FileWriter(path)) {
+            writer.write(ConversionUtility.bytesToHex(tempRandom1) + "\n");
+            writer.write(ConversionUtility.bytesToHex(tempRandom2) + "\n");
+            writer.write(ConversionUtility.bytesToHex(tempRandom3));
+
+            int[][] key = new int[3][16];
+            for (int i = 0; i < 16; i++) {
+                key[0][i] = tempRandom1[i];
+                key[1][i] = tempRandom2[i];
+                key[2][i] = tempRandom3[i];
+            }
+            return key;
+        }
+    }
+
+    public static int[][] readSymmetricKey(File file) throws IOException{
+        int[][] key = new int[3][16];
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+            String line = reader.readLine();
+            for (int i = 0; i < 3; i++) {
+                byte[] temp = ConversionUtility.hexToBytes(line);
+                for (int j = 0; j < 16; j++) {
+                    key[i][j] = temp[j] & 0xFF;
+                }
+                line = reader.readLine();
+            }
+            return key;
         }
     }
 }

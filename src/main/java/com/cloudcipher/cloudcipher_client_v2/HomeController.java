@@ -2,6 +2,7 @@ package com.cloudcipher.cloudcipher_client_v2;
 
 import com.cloudcipher.cloudcipher_client_v2.authentication.LoginController;
 import com.cloudcipher.cloudcipher_client_v2.authentication.RegisterController;
+import com.cloudcipher.cloudcipher_client_v2.utility.FileUtility;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -20,7 +21,14 @@ public class HomeController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
-            loadLoginView();
+            FileUtility.loadConfig();
+            FileUtility.loadSymmetricKey();
+
+            if (Globals.getUsername() != null && Globals.getToken() != null) {
+                loadFileView();
+            } else {
+                loadLoginView();
+            }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
