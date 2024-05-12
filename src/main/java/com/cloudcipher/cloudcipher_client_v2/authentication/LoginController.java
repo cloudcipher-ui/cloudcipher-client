@@ -4,6 +4,7 @@ import com.cloudcipher.cloudcipher_client_v2.Globals;
 import com.cloudcipher.cloudcipher_client_v2.HomeController;
 import com.cloudcipher.cloudcipher_client_v2.authentication.model.AuthenticationResponse;
 import com.cloudcipher.cloudcipher_client_v2.authentication.tasks.AuthenticationTask;
+import com.cloudcipher.cloudcipher_client_v2.utility.FileUtility;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -64,6 +65,9 @@ public class LoginController {
             Globals.setUsername(result.getUsername());
             Globals.setToken(result.getToken());
             try {
+                FileUtility.loadSymmetricKey();
+                FileUtility.saveConfig();
+
                 homeController.loadFileView();
             } catch (IOException e) {
                 throw new RuntimeException(e);

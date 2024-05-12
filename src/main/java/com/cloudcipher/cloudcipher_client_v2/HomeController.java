@@ -2,6 +2,7 @@ package com.cloudcipher.cloudcipher_client_v2;
 
 import com.cloudcipher.cloudcipher_client_v2.authentication.LoginController;
 import com.cloudcipher.cloudcipher_client_v2.authentication.RegisterController;
+import com.cloudcipher.cloudcipher_client_v2.file.FileController;
 import com.cloudcipher.cloudcipher_client_v2.utility.FileUtility;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -56,6 +57,8 @@ public class HomeController implements Initializable {
         cloudStoragePane.getChildren().clear();
         FXMLLoader fxmlLoader = new FXMLLoader(CloudCipherClient.class.getResource("file/file-view.fxml"));
         Parent view = fxmlLoader.load();
+        FileController fileController = fxmlLoader.getController();
+        fileController.setHomeController(this);
         cloudStoragePane.getChildren().add(view);
     }
 }

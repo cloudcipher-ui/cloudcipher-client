@@ -2,6 +2,7 @@ package com.cloudcipher.cloudcipher_client_v2.file;
 
 import com.cloudcipher.cloudcipher_client_v2.CloudCipherClient;
 import com.cloudcipher.cloudcipher_client_v2.Globals;
+import com.cloudcipher.cloudcipher_client_v2.HomeController;
 import com.cloudcipher.cloudcipher_client_v2.file.model.DownloadResponse;
 import com.cloudcipher.cloudcipher_client_v2.file.tasks.DeleteTask;
 import com.cloudcipher.cloudcipher_client_v2.file.tasks.DownloadTask;
@@ -18,6 +19,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import lombok.Setter;
 
 import java.io.IOException;
 import java.net.URL;
@@ -37,6 +39,11 @@ public class FileController implements Initializable {
     private Label loadingError;
     @FXML
     private ProgressIndicator loadingSpinner;
+    @FXML
+    private Button errorLogoutButton;
+
+    @Setter
+    private HomeController homeController;
 
 
     @Override
@@ -79,6 +86,9 @@ public class FileController implements Initializable {
 
             loadingSpinner.setVisible(false);
             loadingSpinner.setManaged(false);
+
+            errorLogoutButton.setVisible(true);
+            errorLogoutButton.setManaged(true);
         });
 
         contentPane.setVisible(false);
@@ -87,6 +97,8 @@ public class FileController implements Initializable {
         loadingPane.setVisible(true);
         loadingPane.setManaged(true);
         loadingError.setVisible(false);
+        errorLogoutButton.setVisible(false);
+        errorLogoutButton.setManaged(false);
 
         fileListGrid.getChildren().clear();
         Thread thread = new Thread(listTask);
@@ -206,5 +218,16 @@ public class FileController implements Initializable {
             downloadThread.start();
         });
         return downloadItem;
+    }
+
+    public void logout() throws IOException {
+        Globals.setUsername(null);
+        Globals.setToken(null);
+        Globals.setKey(null);
+        homeController.loadLoginView();
+    }
+
+    public void handleLogoutButtonClick() throws IOException {
+        logout();
     }
 }

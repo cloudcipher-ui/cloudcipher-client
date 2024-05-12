@@ -171,4 +171,8 @@ public class SideFileMenuController implements Initializable {
             createKeyView.setManaged(false);
         }
     }
+
+    public void handleLogoutButtonClick() throws IOException {
+        fileController.logout();
+    }
 }
