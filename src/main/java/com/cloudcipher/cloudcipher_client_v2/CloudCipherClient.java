@@ -15,6 +15,8 @@ public class CloudCipherClient extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         FileUtility.loadConfig();
+        Globals.setPrimaryStage(stage);
+
         FXMLLoader fxmlLoader = new FXMLLoader(CloudCipherClient.class.getResource("home-view.fxml"));
 
         Scene scene = new Scene(fxmlLoader.load(), WIDTH, HEIGHT);

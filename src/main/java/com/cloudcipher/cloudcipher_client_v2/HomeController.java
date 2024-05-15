@@ -17,7 +17,9 @@ import java.util.ResourceBundle;
 public class HomeController implements Initializable {
 
     @FXML
-    Pane cloudStoragePane;
+    private Pane localToolsPane;
+    @FXML
+    private Pane cloudStoragePane;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -30,6 +32,8 @@ public class HomeController implements Initializable {
             } else {
                 loadLoginView();
             }
+
+            loadLocalToolsView();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -60,5 +64,12 @@ public class HomeController implements Initializable {
         FileController fileController = fxmlLoader.getController();
         fileController.setHomeController(this);
         cloudStoragePane.getChildren().add(view);
+    }
+
+    public void loadLocalToolsView() throws IOException {
+        localToolsPane.getChildren().clear();
+        FXMLLoader fxmlLoader = new FXMLLoader(CloudCipherClient.class.getResource("tool/tool-view.fxml"));
+        Parent view = fxmlLoader.load();
+        localToolsPane.getChildren().add(view);
     }
 }

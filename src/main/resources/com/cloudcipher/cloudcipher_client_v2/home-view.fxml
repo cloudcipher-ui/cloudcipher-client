@@ -16,10 +16,7 @@
                     <Pane fx:id="cloudStoragePane" prefHeight="200.0" prefWidth="800.0"/>
                 </Tab>
                 <Tab text="Local Tools">
-                    <VBox alignment="CENTER" prefHeight="200.0" prefWidth="800.0" spacing="8.0">
-                        <Button text="Encrypt"/>
-                        <Button text="Decrypt"/>
-                    </VBox>
+                    <Pane fx:id="localToolsPane" prefHeight="200.0" prefWidth="800.0"/>
                 </Tab>
             </TabPane>
         </center>

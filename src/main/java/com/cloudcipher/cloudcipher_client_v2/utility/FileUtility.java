@@ -120,4 +120,14 @@ public class FileUtility {
         int[][] key = CryptoUtility.readSymmetricKey(keyFile);
         Globals.setKey(key);
     }
+
+    public static void writeFile(byte[] fileBytes, String path) {
+        File file = new File(path);
+
+        try (FileOutputStream fos = new FileOutputStream(file)) {
+            fos.write(fileBytes);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

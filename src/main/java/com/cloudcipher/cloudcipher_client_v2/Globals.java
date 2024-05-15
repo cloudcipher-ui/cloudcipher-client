@@ -1,5 +1,6 @@
 package com.cloudcipher.cloudcipher_client_v2;
 
+import javafx.stage.Window;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -26,4 +27,8 @@ public class Globals {
     @Getter
     @Setter
     private static KeyPair keyPair;
+
+    @Getter
+    @Setter
+    private static Window primaryStage;
 }
