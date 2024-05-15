@@ -49,7 +49,14 @@ public class ToolController {
         progressIndicator.setProgress(ProgressIndicator.INDETERMINATE_PROGRESS);
 
         selectFileButton.setOnAction(e -> {
-            File selectedFile = fileChooser.showOpenDialog(dialogStage);
+            File selectedFile;
+            try {
+                selectedFile = fileChooser.showOpenDialog(dialogStage);
+            } catch (Exception err) {
+                fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
+                selectedFile = fileChooser.showOpenDialog(dialogStage);
+            }
+
             if (selectedFile != null) {
                 double fileSize = selectedFile.length();
                 if (fileSize > 1024 * 1024 * 1024) {
@@ -57,13 +64,22 @@ public class ToolController {
                     return;
                 }
                 selectedFileLabel.setText(selectedFile.getAbsolutePath());
+                fileChooser.setInitialDirectory(selectedFile.getParentFile());
             }
         });
 
         selectKeyButton.setOnAction(e -> {
-            File selectedKey = fileChooser.showOpenDialog(dialogStage);
+            File selectedKey;
+            try {
+                selectedKey = fileChooser.showOpenDialog(dialogStage);
+            } catch (Exception err) {
+                fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
+                selectedKey = fileChooser.showOpenDialog(dialogStage);
+            }
+
             if (selectedKey != null) {
                 selectedKeyLabel.setText(selectedKey.getAbsolutePath());
+                fileChooser.setInitialDirectory(selectedKey.getParentFile());
             }
         });
 
@@ -131,23 +147,47 @@ public class ToolController {
         progressIndicator.setProgress(ProgressIndicator.INDETERMINATE_PROGRESS);
 
         selectFileButton.setOnAction(e -> {
-            File selectedFile = fileChooser.showOpenDialog(dialogStage);
+            File selectedFile;
+            try {
+                selectedFile = fileChooser.showOpenDialog(dialogStage);
+            } catch (Exception err) {
+                fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
+                selectedFile = fileChooser.showOpenDialog(dialogStage);
+            }
+
             if (selectedFile != null) {
                 selectedFileLabel.setText(selectedFile.getAbsolutePath());
+                fileChooser.setInitialDirectory(selectedFile.getParentFile());
             }
         });
 
         selectKeyButton.setOnAction(e -> {
-            File selectedKey = fileChooser.showOpenDialog(dialogStage);
+            File selectedKey;
+            try {
+                selectedKey = fileChooser.showOpenDialog(dialogStage);
+            } catch (Exception err) {
+                fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
+                selectedKey = fileChooser.showOpenDialog(dialogStage);
+            }
+
             if (selectedKey != null) {
                 selectedKeyLabel.setText(selectedKey.getAbsolutePath());
+                fileChooser.setInitialDirectory(selectedKey.getParentFile());
             }
         });
 
         selectIvButton.setOnAction(e -> {
-            File selectedIv = fileChooser.showOpenDialog(dialogStage);
+            File selectedIv;
+            try {
+                selectedIv = fileChooser.showOpenDialog(dialogStage);
+            } catch (Exception err) {
+                fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
+                selectedIv = fileChooser.showOpenDialog(dialogStage);
+            }
+
             if (selectedIv != null) {
                 selectedIvLabel.setText(selectedIv.getAbsolutePath());
+                fileChooser.setInitialDirectory(selectedIv.getParentFile());
             }
         });
 
