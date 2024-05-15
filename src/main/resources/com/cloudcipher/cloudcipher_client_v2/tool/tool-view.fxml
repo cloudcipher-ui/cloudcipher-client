@@ -10,5 +10,6 @@
     <VBox alignment="CENTER" prefHeight="200.0" prefWidth="800.0" spacing="8.0">
         <Button onAction="#handleEncryptButtonClick" text="Encrypt"/>
         <Button onAction="#handleDecryptButtonClick" text="Decrypt"/>
+        <Button onAction="#handleReceiveButtonClick" text="Receive"/>
     </VBox>
 </AnchorPane>

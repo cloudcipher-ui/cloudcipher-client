@@ -11,7 +11,7 @@ public class FileUtility {
     }
 
     public static void saveDownload(byte[] fileBytes, String filename) {
-        File downloadFile = new File(Globals.getDefaultDirectory() + "/" + filename);
+        File downloadFile = new File(Globals.getDefaultDirectory() + "/downloaded/" + filename);
         if (filename.contains("/")) {
             String[] parts = filename.split("/");
             String directory = Globals.getDefaultDirectory();

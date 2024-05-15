@@ -178,11 +178,11 @@ public class FileController implements Initializable {
                     copySuccess.setStyle("-fx-text-fill: green;");
                     copySuccess.setVisible(false);
 
-                    Label shareLinkLabel = new Label("localhost:8000/file/" + shareId);
+                    Label shareLinkLabel = new Label("This is the share ID: " + shareId);
                     shareLinkLabel.setOnMouseClicked(e3 -> {
                         final Clipboard clipboard = Clipboard.getSystemClipboard();
                         final ClipboardContent content = new ClipboardContent();
-                        content.putString(shareLinkLabel.getText());
+                        content.putString(shareId);
                         clipboard.setContent(content);
 
                         copySuccess.setVisible(true);
