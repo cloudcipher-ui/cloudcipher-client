@@ -48,7 +48,7 @@ public class KeyGenerator {
 		return p;
 	}
 
-	int[][] reGenerate(int[] k1, int[] k2, int[] k3, int n) throws Exception {
+	public int[][] reGenerate(int[] k1, int[] k2, int[] k3, int n) throws Exception {
 		// (P1, P2, P3)
 		int[][] pa = generate(false, k1, k2, k3, n);
 		int[] zeros1 = new int[16];

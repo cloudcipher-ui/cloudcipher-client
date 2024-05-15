@@ -130,4 +130,30 @@ public class FileUtility {
             throw new RuntimeException(e);
         }
     }
+
+    public static void createDirectory(String directory) {
+        File dir = new File(directory);
+        if (!dir.exists()) {
+            if (!dir.mkdir()) {
+                throw new RuntimeException("Failed to create directory: " + directory);
+            }
+        }
+    }
+
+    public static void writeKeyFile(int[][] key, String path) {
+        byte[][] keyBytes = new byte[3][16];
+        for (int i = 0; i < 16; i++) {
+            keyBytes[0][i] = (byte) (key[0][i] & 0xFF);
+            keyBytes[1][i] = (byte) (key[1][i] & 0xFF);
+            keyBytes[2][i] = (byte) (key[2][i] & 0xFF);
+        }
+
+        try (FileWriter writer = new FileWriter(path)) {
+            writer.write(ConversionUtility.bytesToHex(keyBytes[0]) + "\n");
+            writer.write(ConversionUtility.bytesToHex(keyBytes[1]) + "\n");
+            writer.write(ConversionUtility.bytesToHex(keyBytes[2]));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

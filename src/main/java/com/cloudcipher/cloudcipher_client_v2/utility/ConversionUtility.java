@@ -43,4 +43,8 @@ public class ConversionUtility {
         }
         return byteArray;
     }
+
+    public static byte[] byteArrayFromBase64(String fileBytes) {
+        return java.util.Base64.getDecoder().decode(fileBytes);
+    }
 }

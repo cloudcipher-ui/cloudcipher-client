@@ -4,9 +4,11 @@ import com.cloudcipher.cloudcipher_client_v2.CloudCipherClient;
 import com.cloudcipher.cloudcipher_client_v2.Globals;
 import com.cloudcipher.cloudcipher_client_v2.HomeController;
 import com.cloudcipher.cloudcipher_client_v2.file.model.DownloadResponse;
+import com.cloudcipher.cloudcipher_client_v2.file.model.ShareResponse;
 import com.cloudcipher.cloudcipher_client_v2.file.tasks.DeleteTask;
 import com.cloudcipher.cloudcipher_client_v2.file.tasks.DownloadTask;
 import com.cloudcipher.cloudcipher_client_v2.file.tasks.ListTask;
+import com.cloudcipher.cloudcipher_client_v2.file.tasks.ShareTask;
 import com.cloudcipher.cloudcipher_client_v2.file.view.InitialDirectoryDialog;
 import com.cloudcipher.cloudcipher_client_v2.utility.CryptoUtility;
 import com.cloudcipher.cloudcipher_client_v2.utility.FileUtility;
@@ -16,6 +18,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
+import javafx.scene.input.Clipboard;
+import javafx.scene.input.ClipboardContent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -119,10 +123,7 @@ public class FileController implements Initializable {
 
         MenuItem deleteItem = getDeleteItem(filename, fileLabel, contextMenu);
 
-        MenuItem shareItem = new MenuItem("Share");
-//        shareItem.setOnAction(event ->
-//                ShareDialog.createAndShowShareDialog(filename, size)
-//        );
+        MenuItem shareItem = getShareItem(filename, (int) size, fileLabel, contextMenu);
 
         contextMenu.getItems().add(downloadItem);
         if (!filename.contains("shared/")) {
@@ -137,6 +138,87 @@ public class FileController implements Initializable {
         int rowIndex = fileListGrid.getRowCount();
         fileListGrid.add(fileLabel, 0, rowIndex);
         fileListGrid.add(fileSize, 1, rowIndex);
+    }
+
+    private MenuItem getShareItem(String filename, int fileSize, Label fileLabel, ContextMenu contextMenu) {
+        MenuItem shareItem = new MenuItem("Share");
+        shareItem.setOnAction(event -> {
+            Task<ShareResponse> shareTask = new ShareTask(Globals.getUsername(), Globals.getToken(), filename, fileSize);
+            shareTask.setOnSucceeded(event2 -> {
+                ShareResponse response = shareTask.getValue();
+                try {
+                    byte[] reencryptedBytes = response.getFileBytes();
+                    byte[] ivBytes = response.getIvBytes();
+                    String shareId = response.getShareId();
+                    int[][] newKey = response.getNewKey();
+
+                    String directory = Globals.getDefaultDirectory() + "/shared";
+                    FileUtility.createDirectory(directory);
+
+                    String specificDirectory = directory + "/" + shareId;
+                    FileUtility.createDirectory(specificDirectory);
+
+                    String reencryptedFilename = shareId + "-" + filename;
+                    FileUtility.writeFile(reencryptedBytes, specificDirectory + "/" + reencryptedFilename);
+
+                    String ivFilename = shareId + "-" + filename.split("\\.")[0] + ".iv";
+                    FileUtility.writeFile(ivBytes, specificDirectory + "/" + ivFilename);
+
+                    String keyFileName = shareId + "-" + filename.split("\\.")[0] + ".key";
+                    FileUtility.writeKeyFile(newKey, specificDirectory + "/" + keyFileName);
+
+                    fileLabel.setGraphic(null);
+
+                    Dialog<String> dialog = new Dialog<>();
+                    dialog.setTitle("Share ID");
+                    dialog.setHeaderText("Share Link for " + filename);
+                    dialog.getDialogPane().setStyle("-fx-padding: 8px;");
+
+                    Label copySuccess = new Label("Copied to clipboard");
+                    copySuccess.setStyle("-fx-text-fill: green;");
+                    copySuccess.setVisible(false);
+
+                    Label shareLinkLabel = new Label("localhost:8000/file/" + shareId);
+                    shareLinkLabel.setOnMouseClicked(e3 -> {
+                        final Clipboard clipboard = Clipboard.getSystemClipboard();
+                        final ClipboardContent content = new ClipboardContent();
+                        content.putString(shareLinkLabel.getText());
+                        clipboard.setContent(content);
+
+                        copySuccess.setVisible(true);
+                    });
+                    dialog.getDialogPane().setContent(new VBox(shareLinkLabel, copySuccess));
+                    dialog.getDialogPane().getButtonTypes().add(ButtonType.OK);
+                    dialog.showAndWait();
+                } catch (Exception e) {
+                    Label exclamation = new Label("!");
+                    exclamation.setStyle("-fx-text-fill: red;");
+                    fileLabel.setGraphic(exclamation);
+                }
+                fileLabel.setContextMenu(contextMenu);
+            });
+
+            shareTask.setOnFailed(event2 -> {
+                Label exclamation = new Label("!");
+                exclamation.setStyle("-fx-text-fill: red;");
+                fileLabel.setGraphic(exclamation);
+                fileLabel.setContextMenu(contextMenu);
+            });
+
+            ProgressIndicator shareSpinner = new ProgressIndicator();
+            shareSpinner.setVisible(true);
+            shareSpinner.setManaged(true);
+            shareSpinner.setProgress(-1);
+            shareSpinner.setPrefSize(15, 15);
+
+            fileLabel.setGraphic(shareSpinner);
+            fileLabel.setGraphicTextGap(5);
+            fileLabel.setContextMenu(null);
+
+            Thread shareThread = new Thread(shareTask);
+            shareThread.start();
+        });
+        return shareItem;
     }
 
     private MenuItem getDeleteItem(String filename, Label fileLabel, ContextMenu contextMenu) {

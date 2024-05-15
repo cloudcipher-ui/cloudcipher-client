@@ -2,6 +2,7 @@ package com.cloudcipher.cloudcipher_client_v2.utility;
 
 import com.cloudcipher.cloudcipher_client_v2.utility.CloudCipher.CloudCipherUtility;
 import com.cloudcipher.cloudcipher_client_v2.file.model.EncryptionResult;
+import com.cloudcipher.cloudcipher_client_v2.utility.CloudCipher.KeyGenerator;
 
 import java.io.*;
 import java.security.SecureRandom;
@@ -165,5 +166,25 @@ public class CryptoUtility {
             }
             return key;
         }
+    }
+
+    public static RG regenerateKey(int fileSize, int[][] key) throws Exception {
+        int numBlocks = fileSize / BLOCK_SIZE;
+
+        KeyGenerator keyGenerator = new KeyGenerator();
+        int[][] rg = keyGenerator.reGenerate(key[0], key[1], key[2], numBlocks-1);
+
+        int[][] newKeys = new int[3][BLOCK_SIZE];
+        for (int i = 0; i < BLOCK_SIZE; i++) {
+            newKeys[0][i] = rg[4][i];
+            newKeys[1][i] = rg[2][i];
+            newKeys[2][i] = rg[5][i];
+        }
+
+        RG regenerateData = new RG();
+        regenerateData.setRg(rg);
+        regenerateData.setKey(newKeys);
+
+        return regenerateData;
     }
 }
