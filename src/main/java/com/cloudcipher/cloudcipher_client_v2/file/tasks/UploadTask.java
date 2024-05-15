@@ -11,6 +11,7 @@ import javafx.concurrent.Task;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.ContentType;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
@@ -35,7 +36,7 @@ public class UploadTask extends Task<String> {
     @Override
     protected String call() {
         byte[] fileBytes = FileUtility.readFile(this.file);
-        EncryptionResult result = CryptoUtility.encrypt(fileBytes, Globals.getKey());
+        EncryptionResult result = CryptoUtility.encrypt(fileBytes, this.file.length(), Globals.getKey());
 
         long[][] encryptedFile = result.getEncryptedFile();
         byte[] encryptedFileBytes = ConversionUtility.longArrayToByteArray(encryptedFile);
@@ -46,8 +47,8 @@ public class UploadTask extends Task<String> {
         HttpEntity entity = MultipartEntityBuilder.create()
                 .addTextBody("username", this.username)
                 .addTextBody("token", this.token)
-                .addBinaryBody("file", encryptedFileBytes, org.apache.http.entity.ContentType.DEFAULT_BINARY, this.file.getName())
-                .addBinaryBody("iv", iv, org.apache.http.entity.ContentType.DEFAULT_BINARY, "iv")
+                .addBinaryBody("file", encryptedFileBytes, ContentType.APPLICATION_OCTET_STREAM, this.file.getName())
+                .addBinaryBody("iv", iv, ContentType.APPLICATION_OCTET_STREAM, "iv")
                 .build();
 
         post.setEntity(entity);

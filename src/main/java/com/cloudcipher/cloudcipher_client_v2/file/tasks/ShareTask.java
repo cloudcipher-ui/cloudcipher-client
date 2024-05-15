@@ -42,14 +42,11 @@ public class ShareTask extends Task<ShareResponse> {
         StringBuilder rgHexs = new StringBuilder();
         for (int[] ints : rg) {
             byte[] temp = new byte[ints.length];
-            System.out.print(ints.length + " ");
             for (int j = 0; j < ints.length; j++) {
                 temp[j] = (byte) (ints[j] & 0xFF);
             }
             rgHexs.append(ConversionUtility.bytesToHex(temp)).append(" ");
         }
-        System.out.println();
-
 
         String SERVER_URL = "http://localhost:8080/reencrypt/cloud";
         HttpPost post = new HttpPost(SERVER_URL);

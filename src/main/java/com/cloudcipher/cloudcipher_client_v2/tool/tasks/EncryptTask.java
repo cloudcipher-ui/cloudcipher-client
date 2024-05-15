@@ -28,7 +28,7 @@ public class EncryptTask extends Task<Void> {
         byte[] fileBytes = FileUtility.readFile(file);
         int[][] key = CryptoUtility.readSymmetricKey(keyFile);
 
-        EncryptionResult result = CryptoUtility.encrypt(fileBytes, key);
+        EncryptionResult result = CryptoUtility.encrypt(fileBytes, file.length(), key);
         long[][] encryptedFile = result.getEncryptedFile();
         byte[] encryptedFileBytes = ConversionUtility.longArrayToByteArray(encryptedFile);
         byte[] iv = result.getIv();

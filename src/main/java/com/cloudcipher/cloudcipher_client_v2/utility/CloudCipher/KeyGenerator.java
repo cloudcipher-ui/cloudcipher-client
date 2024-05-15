@@ -70,21 +70,4 @@ public class KeyGenerator {
 		res[5] = pb[5];
 		return res;
 	}
-
-	int[][] reGenerateN(int[][] sourceKey, int[][] destinationKey, int n) throws Exception {
-		int[][] pa = generate(false, sourceKey[0], sourceKey[1], sourceKey[2], n);
-		int[][] pb = generate(true, destinationKey[0], destinationKey[1], destinationKey[2], n);
-
-		int[] ck1 = perm.findConversionKey(pa[0], pb[0]);
-		int[] ck3 = perm.findConversionKey(pa[2], pb[2]);
-
-		int[][] res = new int[6][];
-		res[0] = ck1;
-		res[1] = sourceKey[1];
-		res[2] = pb[4];
-		res[3] = ck3;
-		res[4] = pb[3];
-		res[5] = pb[5];
-		return res;
-	}
 }
