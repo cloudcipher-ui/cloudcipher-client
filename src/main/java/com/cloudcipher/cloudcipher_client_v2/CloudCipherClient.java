@@ -1,5 +1,6 @@
 package com.cloudcipher.cloudcipher_client_v2;
 
+import atlantafx.base.theme.PrimerLight;
 import com.cloudcipher.cloudcipher_client_v2.utility.FileUtility;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -14,6 +15,8 @@ public class CloudCipherClient extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
+        Application.setUserAgentStylesheet(new PrimerLight().getUserAgentStylesheet());
+
         FileUtility.loadConfig();
         Globals.setPrimaryStage(stage);
 

@@ -15,6 +15,7 @@ module com.cloudcipher.cloudcipher_client_v2 {
     requires org.apache.httpcomponents.httpcore;
     requires org.apache.httpcomponents.httpclient;
     requires org.apache.httpcomponents.httpmime;
+    requires atlantafx.base;
 
     opens com.cloudcipher.cloudcipher_client_v2 to javafx.fxml;
     exports com.cloudcipher.cloudcipher_client_v2;
