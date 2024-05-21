@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.*?>
+<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
@@ -21,26 +22,41 @@
                     <padding>
                         <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
                     </padding>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
                 </ToggleButton>
                 <ToggleButton fx:id="decryptToggleButton" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="215.0" text="Decrypt">
                     <padding>
                         <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
                     </padding>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
                 </ToggleButton>
                 <ToggleButton fx:id="sendToggleButton" layoutX="10.0" layoutY="61.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="215.0" text="Send">
                     <padding>
                         <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
                     </padding>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
                 </ToggleButton>
                 <ToggleButton fx:id="receiveToggleButton" layoutX="10.0" layoutY="112.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="215.0" text="Receive">
                     <padding>
                         <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
                     </padding>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
                 </ToggleButton>
                 <ToggleButton fx:id="keyToggleButton" layoutX="10.0" layoutY="112.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="215.0" text="Key">
                     <padding>
                         <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
                     </padding>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
                 </ToggleButton>
             </VBox>
         </ScrollPane>
