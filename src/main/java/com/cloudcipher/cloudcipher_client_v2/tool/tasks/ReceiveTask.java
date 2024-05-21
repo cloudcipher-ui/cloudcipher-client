@@ -1,5 +1,6 @@
 package com.cloudcipher.cloudcipher_client_v2.tool.tasks;
 
+import com.cloudcipher.cloudcipher_client_v2.Globals;
 import com.cloudcipher.cloudcipher_client_v2.utility.ConversionUtility;
 import com.cloudcipher.cloudcipher_client_v2.utility.CryptoUtility;
 import com.cloudcipher.cloudcipher_client_v2.utility.FileUtility;
@@ -16,7 +17,7 @@ import org.apache.http.util.EntityUtils;
 import java.io.File;
 import java.util.Map;
 
-public class ReceiveTask extends Task<Void> {
+public class ReceiveTask extends Task<String> {
 
     private final String shareId;
     private final String keyPath;
@@ -27,7 +28,7 @@ public class ReceiveTask extends Task<Void> {
     }
 
     @Override
-    protected Void call() throws Exception {
+    protected String call() throws Exception {
         String url = "http://localhost:8080/receive/" + this.shareId;
         HttpGet get = new HttpGet(url);
 
@@ -53,9 +54,18 @@ public class ReceiveTask extends Task<Void> {
             int[][] key = CryptoUtility.readSymmetricKey(keyFile);
 
             byte[] decryptedFileBytes = CryptoUtility.decrypt(fileBytes, key, ivBytes);
-            FileUtility.saveDownload(decryptedFileBytes, filename);
 
-            return null;
+            String directory = Globals.getDefaultDirectory() + "/downloaded/";
+            File dir = new File(directory);
+            if (!dir.exists()) {
+                if (!dir.mkdir()) {
+                    throw new RuntimeException("Failed to create directory: " + directory);
+                }
+            }
+
+            FileUtility.writeFile(decryptedFileBytes, directory + filename);
+
+            return directory;
         }
     }
 }

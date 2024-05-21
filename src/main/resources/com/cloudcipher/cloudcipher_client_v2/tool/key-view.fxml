@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox alignment="TOP_CENTER" spacing="32.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cloudcipher.cloudcipher_client_v2.tool.KeyController">
+<VBox alignment="CENTER" prefHeight="70.0" prefWidth="400.0" spacing="8.0">
+    <TextField fx:id="keyName" maxWidth="300.0" prefHeight="25.0" prefWidth="100.0" promptText="Enter your key name" />
+</VBox>
+<VBox alignment="CENTER" layoutX="42.0" layoutY="190.0" prefHeight="70.0" prefWidth="400.0" spacing="8.0">
+    <Label fx:id="errorLabel" alignment="CENTER" prefHeight="20.0" prefWidth="400.0" textAlignment="CENTER" textFill="RED" textOverrun="CENTER_WORD_ELLIPSIS" wrapText="true" />
+    <Button mnemonicParsing="false" onAction="#handleGenerateKeyButtonClick" prefHeight="20.0" text="Generate symmetric key" />
+</VBox>
+</VBox>

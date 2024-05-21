@@ -8,7 +8,7 @@ import javafx.concurrent.Task;
 import java.io.File;
 import java.io.IOException;
 
-public class DecryptTask extends Task<Void> {
+public class DecryptTask extends Task<String> {
 
     private final String filePath;
     private final String ivPath;
@@ -21,7 +21,7 @@ public class DecryptTask extends Task<Void> {
     }
 
     @Override
-    protected Void call() throws IOException {
+    protected String call() throws IOException {
         File file = new File(this.filePath);
         File keyFile = new File(this.keyPath);
         File ivFile = new File(this.ivPath);
@@ -43,6 +43,6 @@ public class DecryptTask extends Task<Void> {
         String resultFileName = file.getName().replace("_encrypted_", "_decrypted_");
         FileUtility.writeFile(decryptedFileBytes, directory + resultFileName);
 
-        return null;
+        return directory;
     }
 }

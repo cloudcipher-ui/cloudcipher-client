@@ -31,4 +31,7 @@ public class Globals {
     @Getter
     @Setter
     private static Window primaryStage;
+
+    @Getter
+    private static long maxSize = 1024 * 1024 * 1024L;
 }

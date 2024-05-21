@@ -10,7 +10,7 @@ import javafx.concurrent.Task;
 import java.io.File;
 import java.io.IOException;
 
-public class EncryptTask extends Task<Void> {
+public class EncryptTask extends Task<String> {
 
     private final String filePath;
     private final String keyPath;
@@ -21,7 +21,7 @@ public class EncryptTask extends Task<Void> {
     }
 
     @Override
-    protected Void call() throws IOException {
+    protected String call() throws IOException {
         File file = new File(this.filePath);
         File keyFile = new File(this.keyPath);
 
@@ -49,6 +49,6 @@ public class EncryptTask extends Task<Void> {
         FileUtility.writeFile(encryptedFileBytes, directory + resultFileName);
         FileUtility.writeFile(iv, directory + resultIvName);
 
-        return null;
+        return directory;
     }
 }
