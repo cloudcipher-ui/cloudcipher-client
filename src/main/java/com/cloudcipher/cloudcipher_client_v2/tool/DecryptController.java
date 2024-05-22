@@ -23,8 +23,11 @@ public class DecryptController extends BaseController {
 
         Button button = (Button) event.getSource();
         button.setDisable(true);
-        button.setText("decrypting...");
-        button.setGraphic(new ProgressIndicator(ProgressIndicator.INDETERMINATE_PROGRESS));
+        button.setText("Decrypting...");
+
+        ProgressIndicator ps = new ProgressIndicator(ProgressIndicator.INDETERMINATE_PROGRESS);
+        ps.setPrefSize(15, 15);
+        button.setGraphic(ps);
 
         decryptTask.setOnSucceeded(e -> {
             button.setDisable(false);
@@ -40,7 +43,7 @@ public class DecryptController extends BaseController {
         });
         decryptTask.setOnFailed(e -> {
             button.setDisable(false);
-            button.setText("decrypt");
+            button.setText("Decrypt");
             button.setGraphic(null);
             errorLabel.setText("Failed to decrypt file.");
 

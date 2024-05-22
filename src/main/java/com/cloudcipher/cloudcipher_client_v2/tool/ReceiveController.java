@@ -29,7 +29,10 @@ public class ReceiveController extends BaseController {
         Button button = (Button) event.getSource();
         button.setDisable(true);
         button.setText("Receiving...");
-        button.setGraphic(new ProgressIndicator(ProgressIndicator.INDETERMINATE_PROGRESS));
+
+        ProgressIndicator ps = new ProgressIndicator(ProgressIndicator.INDETERMINATE_PROGRESS);
+        ps.setPrefSize(15, 15);
+        button.setGraphic(ps);
 
         receiveTask.setOnSucceeded(e -> {
             button.setDisable(false);

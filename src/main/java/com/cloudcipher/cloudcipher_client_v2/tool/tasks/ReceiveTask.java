@@ -57,13 +57,14 @@ public class ReceiveTask extends Task<String> {
 
             String directory = Globals.getDefaultDirectory() + "/downloaded/";
             File dir = new File(directory);
+            directory = dir.getAbsolutePath();
             if (!dir.exists()) {
                 if (!dir.mkdir()) {
                     throw new RuntimeException("Failed to create directory: " + directory);
                 }
             }
 
-            FileUtility.writeFile(decryptedFileBytes, directory + filename);
+            FileUtility.writeFile(decryptedFileBytes, directory + "/" + filename);
 
             return directory;
         }

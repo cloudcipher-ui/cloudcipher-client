@@ -111,6 +111,7 @@ public class SideFileMenuController implements Initializable {
             fileButton.setFocusTraversable(true);
 
             uploadButton.setGraphic(null);
+            uploadButton.setText("Upload");
 
             fileController.refreshList();
         });
@@ -130,16 +131,19 @@ public class SideFileMenuController implements Initializable {
             fileButton.setFocusTraversable(true);
 
             uploadButton.setGraphic(null);
+            uploadButton.setText("Upload");
         });
 
         ProgressIndicator uploadSpinner = new ProgressIndicator();
+        uploadSpinner.setStyle("-fx-progress-color: #fff;");
         uploadSpinner.setVisible(true);
         uploadSpinner.setManaged(true);
         uploadSpinner.setProgress(-1);
-        uploadSpinner.setPrefSize(15, 15);
+        uploadSpinner.setPrefSize(20, 20);
 
         uploadButton.setGraphic(uploadSpinner);
         uploadButton.setGraphicTextGap(5);
+        uploadButton.setText("Uploading...");
 
         uploadButton.setDisable(true);
         uploadButton.setOpacity(1);

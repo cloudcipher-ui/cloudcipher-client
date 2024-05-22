@@ -22,7 +22,10 @@ public class EncryptController extends BaseController {
         Button button = (Button) event.getSource();
         button.setDisable(true);
         button.setText("Encrypting...");
-        button.setGraphic(new ProgressIndicator(ProgressIndicator.INDETERMINATE_PROGRESS));
+
+        ProgressIndicator ps = new ProgressIndicator(ProgressIndicator.INDETERMINATE_PROGRESS);
+        ps.setPrefSize(15, 15);
+        button.setGraphic(ps);
 
         encryptTask.setOnSucceeded(e -> {
             button.setDisable(false);

@@ -35,6 +35,7 @@ public class EncryptTask extends Task<String> {
 
         String directory = Globals.getDefaultDirectory() + "/encrypted/";
         File dir = new File(directory);
+        directory = dir.getAbsolutePath();
         if (!dir.exists()) {
             if (!dir.mkdir()) {
                 throw new RuntimeException("Failed to create directory: " + directory);
@@ -46,8 +47,8 @@ public class EncryptTask extends Task<String> {
         String resultFileName = fileNameAndExtension[0] + "_encrypted_" + date + "." + fileNameAndExtension[1];
         String resultIvName = fileNameAndExtension[0] + "_iv_" + date + ".iv";
 
-        FileUtility.writeFile(encryptedFileBytes, directory + resultFileName);
-        FileUtility.writeFile(iv, directory + resultIvName);
+        FileUtility.writeFile(encryptedFileBytes, directory + "/" + resultFileName);
+        FileUtility.writeFile(iv, directory + "/" + resultIvName);
 
         return directory;
     }

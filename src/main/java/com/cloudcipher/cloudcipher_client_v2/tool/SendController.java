@@ -27,7 +27,10 @@ public class SendController extends BaseController {
         Button button = (Button) event.getSource();
         button.setDisable(true);
         button.setText("Sending...");
-        button.setGraphic(new ProgressIndicator(ProgressIndicator.INDETERMINATE_PROGRESS));
+
+        ProgressIndicator ps = new ProgressIndicator(ProgressIndicator.INDETERMINATE_PROGRESS);
+        ps.setPrefSize(15, 15);
+        button.setGraphic(ps);
 
         sendTask.setOnSucceeded(e -> {
             button.setDisable(false);
@@ -40,7 +43,6 @@ public class SendController extends BaseController {
             String shareId = response.getShareId();
             int[][] newKey = response.getNewKey();
 
-            // get the filename from the selected file path, handle backslashes from different OS
             String filename = selectedFilePath.split("\\\\")[selectedFilePath.split("\\\\").length - 1];
 
             String directory = Globals.getDefaultDirectory() + "/shared";

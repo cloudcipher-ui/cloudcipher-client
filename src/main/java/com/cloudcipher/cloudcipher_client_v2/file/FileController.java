@@ -20,6 +20,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
+import javafx.scene.input.MouseButton;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -115,14 +116,11 @@ public class FileController implements Initializable {
         }
 
         Label fileLabel = new Label(filename);
-        fileLabel.setStyle("-fx-background-color: white; -fx-padding: 5 0 5 8;");
         fileLabel.setPrefWidth(Double.MAX_VALUE);
 
         ContextMenu contextMenu = new ContextMenu();
         MenuItem downloadItem = getDownloadItem(filename, fileLabel, contextMenu);
-
         MenuItem deleteItem = getDeleteItem(filename, fileLabel, contextMenu);
-
         MenuItem shareItem = getShareItem(filename, (int) size, fileLabel, contextMenu);
 
         contextMenu.getItems().add(downloadItem);
@@ -130,14 +128,41 @@ public class FileController implements Initializable {
             contextMenu.getItems().addAll(deleteItem, shareItem);
         }
         fileLabel.setContextMenu(contextMenu);
+        fileLabel.setOnMouseClicked(event -> {
+            if (event.getButton() == MouseButton.PRIMARY) {
+                contextMenu.show(fileLabel, event.getScreenX(), event.getScreenY());
+            }
+        });
 
         Label fileSize = new Label(FileUtility.parseFileSize(size));
-        fileSize.setStyle("-fx-background-color: white; -fx-padding: 5 0 5 8;");
         fileSize.setPrefWidth(Double.MAX_VALUE);
 
         int rowIndex = fileListGrid.getRowCount();
         fileListGrid.add(fileLabel, 0, rowIndex);
         fileListGrid.add(fileSize, 1, rowIndex);
+
+        // Styling
+        String defaultStyle = "-fx-border-color: #d6d6da; -fx-border-width: 0 0 1 0; -fx-padding: 8;";
+        fileLabel.setStyle(defaultStyle);
+        fileSize.setStyle(defaultStyle);
+
+        String hoverStyle = "-fx-background-color: #f0f0f0;";
+        fileLabel.setOnMouseEntered(event -> {
+            fileLabel.setStyle(hoverStyle + defaultStyle);
+            fileSize.setStyle(hoverStyle + defaultStyle);
+        });
+        fileLabel.setOnMouseExited(event -> {
+            fileLabel.setStyle(defaultStyle);
+            fileSize.setStyle(defaultStyle);
+        });
+        fileSize.setOnMouseEntered(event -> {
+            fileLabel.setStyle(hoverStyle + defaultStyle);
+            fileSize.setStyle(hoverStyle + defaultStyle);
+        });
+        fileSize.setOnMouseExited(event -> {
+            fileLabel.setStyle(defaultStyle);
+            fileSize.setStyle(defaultStyle);
+        });
     }
 
     private MenuItem getShareItem(String filename, int fileSize, Label fileLabel, ContextMenu contextMenu) {
@@ -196,6 +221,11 @@ public class FileController implements Initializable {
                     fileLabel.setGraphic(exclamation);
                 }
                 fileLabel.setContextMenu(contextMenu);
+                fileLabel.setOnMouseClicked(event3 -> {
+                    if (event3.getButton() == MouseButton.PRIMARY) {
+                        contextMenu.show(fileLabel, event3.getScreenX(), event3.getScreenY());
+                    }
+                });
             });
 
             shareTask.setOnFailed(event2 -> {
@@ -203,6 +233,11 @@ public class FileController implements Initializable {
                 exclamation.setStyle("-fx-text-fill: red;");
                 fileLabel.setGraphic(exclamation);
                 fileLabel.setContextMenu(contextMenu);
+                fileLabel.setOnMouseClicked(event3 -> {
+                    if (event3.getButton() == MouseButton.PRIMARY) {
+                        contextMenu.show(fileLabel, event3.getScreenX(), event3.getScreenY());
+                    }
+                });
             });
 
             ProgressIndicator shareSpinner = new ProgressIndicator();
@@ -214,6 +249,7 @@ public class FileController implements Initializable {
             fileLabel.setGraphic(shareSpinner);
             fileLabel.setGraphicTextGap(5);
             fileLabel.setContextMenu(null);
+            fileLabel.setOnMouseClicked(null);
 
             Thread shareThread = new Thread(shareTask);
             shareThread.start();
@@ -229,12 +265,22 @@ public class FileController implements Initializable {
                 refreshList();
                 fileLabel.setGraphic(null);
                 fileLabel.setContextMenu(contextMenu);
+                fileLabel.setOnMouseClicked(event3 -> {
+                    if (event3.getButton() == MouseButton.PRIMARY) {
+                        contextMenu.show(fileLabel, event3.getScreenX(), event3.getScreenY());
+                    }
+                });
             });
             deleteTask.setOnFailed(event2 -> {
                 Label exclamation = new Label("!");
                 exclamation.setStyle("-fx-text-fill: red;");
                 fileLabel.setGraphic(exclamation);
                 fileLabel.setContextMenu(contextMenu);
+                fileLabel.setOnMouseClicked(event3 -> {
+                    if (event3.getButton() == MouseButton.PRIMARY) {
+                        contextMenu.show(fileLabel, event3.getScreenX(), event3.getScreenY());
+                    }
+                });
             });
 
             ProgressIndicator deleteSpinner = new ProgressIndicator();
@@ -246,6 +292,7 @@ public class FileController implements Initializable {
             fileLabel.setGraphic(deleteSpinner);
             fileLabel.setGraphicTextGap(5);
             fileLabel.setContextMenu(null);
+            fileLabel.setOnMouseClicked(null);
 
             Thread deleteThread = new Thread(deleteTask);
             deleteThread.start();
@@ -278,12 +325,22 @@ public class FileController implements Initializable {
                     fileLabel.setGraphic(exclamation);
                 }
                 fileLabel.setContextMenu(contextMenu);
+                fileLabel.setOnMouseClicked(event3 -> {
+                    if (event3.getButton() == MouseButton.PRIMARY) {
+                        contextMenu.show(fileLabel, event3.getScreenX(), event3.getScreenY());
+                    }
+                });
             });
             downloadTask.setOnFailed(event2 -> {
                 Label exclamation = new Label("!");
                 exclamation.setStyle("-fx-text-fill: red;");
                 fileLabel.setGraphic(exclamation);
                 fileLabel.setContextMenu(contextMenu);
+                fileLabel.setOnMouseClicked(event3 -> {
+                    if (event3.getButton() == MouseButton.PRIMARY) {
+                        contextMenu.show(fileLabel, event3.getScreenX(), event3.getScreenY());
+                    }
+                });
             });
 
             ProgressIndicator downloadSpinner = new ProgressIndicator();
@@ -295,6 +352,7 @@ public class FileController implements Initializable {
             fileLabel.setGraphic(downloadSpinner);
             fileLabel.setGraphicTextGap(5);
             fileLabel.setContextMenu(null);
+            fileLabel.setOnMouseClicked(null);
 
             Thread downloadThread = new Thread(downloadTask);
             downloadThread.start();
@@ -306,6 +364,7 @@ public class FileController implements Initializable {
         Globals.setUsername(null);
         Globals.setToken(null);
         Globals.setKey(null);
+        FileUtility.saveConfig();
         homeController.loadLoginView();
     }
 

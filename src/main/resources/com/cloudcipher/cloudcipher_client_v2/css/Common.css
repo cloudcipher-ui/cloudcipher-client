@@ -1,0 +1,49 @@
+.toggle-button:hover {
+    -fx-background-color: #e3e3e8;
+    -fx-border-color: #d6d6da;
+    -fx-border-radius: 6px;
+    -fx-border-style: solid inside;
+    -fx-border-width: 0.5px;
+}
+
+.toggle-button:selected:hover {
+    -fx-background-color: #007aff;
+}
+
+.toggle-button:selected:focused {
+    -fx-border-color: #000;
+    -fx-border-radius: 6px;
+    -fx-border-style: solid inside;
+    -fx-border-width: 0.5px;
+}
+
+.toggle-button:focused {
+    -fx-border-color: #007aff;
+    -fx-border-radius: 6px;
+    -fx-border-style: solid inside;
+    -fx-border-width: 0.5px;
+}
+
+.action-button {
+    -fx-background-color: #007aff;
+    -fx-text-fill: #fff;
+    -fx-cursor: hand;
+}
+
+.action-button:focused {
+    -fx-border-color: #000;
+    -fx-border-radius: 6px;
+    -fx-border-style: solid inside;
+    -fx-border-width: 0.5px;
+}
+
+.logout-button {
+    -fx-background-color: #808080;
+}
+
+.logout-button:focused {
+    -fx-border-color: #007aff;
+    -fx-border-radius: 6px;
+    -fx-border-style: solid inside;
+    -fx-border-width: 0.5px;
+}

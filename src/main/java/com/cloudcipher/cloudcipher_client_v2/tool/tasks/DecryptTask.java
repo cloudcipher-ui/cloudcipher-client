@@ -34,6 +34,7 @@ public class DecryptTask extends Task<String> {
 
         String directory = Globals.getDefaultDirectory() + "/decrypted/";
         File dir = new File(directory);
+        directory = dir.getAbsolutePath();
         if (!dir.exists()) {
             if (!dir.mkdir()) {
                 throw new RuntimeException("Failed to create directory: " + directory);
@@ -41,7 +42,7 @@ public class DecryptTask extends Task<String> {
         }
 
         String resultFileName = file.getName().replace("_encrypted_", "_decrypted_");
-        FileUtility.writeFile(decryptedFileBytes, directory + resultFileName);
+        FileUtility.writeFile(decryptedFileBytes, directory + "/" + resultFileName);
 
         return directory;
     }
