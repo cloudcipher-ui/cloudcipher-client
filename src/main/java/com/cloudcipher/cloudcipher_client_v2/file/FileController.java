@@ -194,16 +194,11 @@ public class FileController implements Initializable {
 
                     fileLabel.setGraphic(null);
 
-                    Dialog<String> dialog = new Dialog<>();
-                    dialog.setTitle("Share ID");
-                    dialog.setHeaderText("Share Link for " + filename);
-                    dialog.getDialogPane().setStyle("-fx-padding: 8px;");
-
                     Label copySuccess = new Label("Copied to clipboard");
                     copySuccess.setStyle("-fx-text-fill: green;");
                     copySuccess.setVisible(false);
 
-                    Label shareLinkLabel = new Label("This is the share ID: " + shareId);
+                    Label shareLinkLabel = new Label("Share ID (click to copy):\n" + shareId);
                     shareLinkLabel.setOnMouseClicked(e3 -> {
                         final Clipboard clipboard = Clipboard.getSystemClipboard();
                         final ClipboardContent content = new ClipboardContent();
@@ -212,9 +207,13 @@ public class FileController implements Initializable {
 
                         copySuccess.setVisible(true);
                     });
-                    dialog.getDialogPane().setContent(new VBox(shareLinkLabel, copySuccess));
-                    dialog.getDialogPane().getButtonTypes().add(ButtonType.OK);
-                    dialog.showAndWait();
+
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setHeaderText(null);
+                    alert.setTitle("Share ID for " + filename);
+                    alert.getDialogPane().setContent(new VBox(shareLinkLabel, copySuccess));
+                    alert.showAndWait();
+
                 } catch (Exception e) {
                     Label exclamation = new Label("!");
                     exclamation.setStyle("-fx-text-fill: red;");
