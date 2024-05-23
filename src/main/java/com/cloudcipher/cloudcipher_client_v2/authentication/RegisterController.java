@@ -93,6 +93,7 @@ public class RegisterController {
 
         registerTask.setOnFailed(event -> {
             errorLabel.setText(registerTask.getException().getMessage());
+            errorLabel.setTextFill(javafx.scene.paint.Color.RED);
             errorLabel.setVisible(true);
             errorLabel.setManaged(true);
 

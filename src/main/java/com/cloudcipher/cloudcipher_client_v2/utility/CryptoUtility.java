@@ -65,7 +65,6 @@ public class CryptoUtility {
                 byte[] temp = new byte[decryptedBytes.length];
                 System.arraycopy(decryptedBytes, 0, temp, 0, decryptedBytes.length);
                 decryptedBytes = new byte[decryptedBytes.length - padding];
-                System.out.println(temp.length + " " + decryptedBytes.length + " " + padding);
                 System.arraycopy(temp, 0, decryptedBytes, 0, decryptedBytes.length);
             }
 

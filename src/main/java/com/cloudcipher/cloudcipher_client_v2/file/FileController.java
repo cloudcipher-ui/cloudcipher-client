@@ -8,7 +8,7 @@ import com.cloudcipher.cloudcipher_client_v2.file.model.ShareResponse;
 import com.cloudcipher.cloudcipher_client_v2.file.tasks.DeleteTask;
 import com.cloudcipher.cloudcipher_client_v2.file.tasks.DownloadTask;
 import com.cloudcipher.cloudcipher_client_v2.file.tasks.ListTask;
-import com.cloudcipher.cloudcipher_client_v2.file.tasks.ShareTask;
+import com.cloudcipher.cloudcipher_client_v2.file.tasks.ShareCloudTask;
 import com.cloudcipher.cloudcipher_client_v2.file.view.InitialDirectoryDialog;
 import com.cloudcipher.cloudcipher_client_v2.utility.CryptoUtility;
 import com.cloudcipher.cloudcipher_client_v2.utility.FileUtility;
@@ -168,7 +168,7 @@ public class FileController implements Initializable {
     private MenuItem getShareItem(String filename, int fileSize, Label fileLabel, ContextMenu contextMenu) {
         MenuItem shareItem = new MenuItem("Share");
         shareItem.setOnAction(event -> {
-            Task<ShareResponse> shareTask = new ShareTask(Globals.getUsername(), Globals.getToken(), filename, fileSize);
+            Task<ShareResponse> shareTask = new ShareCloudTask(Globals.getUsername(), Globals.getToken(), filename, fileSize);
             shareTask.setOnSucceeded(event2 -> {
                 ShareResponse response = shareTask.getValue();
                 try {

@@ -5,21 +5,10 @@ import com.cloudcipher.cloudcipher_client_v2.utility.ConversionUtility;
 import com.cloudcipher.cloudcipher_client_v2.utility.CryptoUtility;
 import com.cloudcipher.cloudcipher_client_v2.file.model.EncryptionResult;
 import com.cloudcipher.cloudcipher_client_v2.utility.FileUtility;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.cloudcipher.cloudcipher_client_v2.utility.WebUtility;
 import javafx.concurrent.Task;
-import org.apache.http.HttpEntity;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.ContentType;
-import org.apache.http.entity.mime.MultipartEntityBuilder;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
-import org.apache.http.util.EntityUtils;
 
 import java.io.File;
-import java.io.IOException;
-import java.util.Map;
 
 public class UploadTask extends Task<String> {
 
@@ -42,34 +31,6 @@ public class UploadTask extends Task<String> {
         byte[] encryptedFileBytes = ConversionUtility.longArrayToByteArray(encryptedFile);
         byte[] iv = result.getIv();
 
-        String SERVER_URL = "http://localhost:8080/upload";
-        HttpPost post = new HttpPost(SERVER_URL);
-        HttpEntity entity = MultipartEntityBuilder.create()
-                .addTextBody("username", this.username)
-                .addTextBody("token", this.token)
-                .addBinaryBody("file", encryptedFileBytes, ContentType.APPLICATION_OCTET_STREAM, this.file.getName())
-                .addBinaryBody("iv", iv, ContentType.APPLICATION_OCTET_STREAM, "iv")
-                .build();
-
-        post.setEntity(entity);
-
-        try (CloseableHttpClient client = HttpClients.createDefault()) {
-            CloseableHttpResponse response = client.execute(post);
-            ObjectMapper mapper = new ObjectMapper();
-            HttpEntity responseEntity = response.getEntity();
-
-            if (response.getStatusLine().getStatusCode() != 200) {
-                Map<String, String> error = mapper.readValue(EntityUtils.toString(responseEntity), new TypeReference<>() {});
-                throw new RuntimeException(error.get("message"));
-            }
-
-            if (responseEntity == null) {
-                throw new RuntimeException("Internal server error. Please try again later or contact support");
-            }
-            return EntityUtils.toString(responseEntity);
-
-        } catch (IOException e) {
-            throw new RuntimeException(e.getMessage());
-        }
+        return WebUtility.uploadRequest(username, token, encryptedFileBytes, iv, this.file.getName());
     }
 }

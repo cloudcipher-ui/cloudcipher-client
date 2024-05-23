@@ -4,15 +4,8 @@ import com.cloudcipher.cloudcipher_client_v2.Globals;
 import com.cloudcipher.cloudcipher_client_v2.utility.ConversionUtility;
 import com.cloudcipher.cloudcipher_client_v2.utility.CryptoUtility;
 import com.cloudcipher.cloudcipher_client_v2.utility.FileUtility;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.cloudcipher.cloudcipher_client_v2.utility.WebUtility;
 import javafx.concurrent.Task;
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
-import org.apache.http.util.EntityUtils;
 
 import java.io.File;
 import java.util.Map;
@@ -29,44 +22,28 @@ public class ReceiveTask extends Task<String> {
 
     @Override
     protected String call() throws Exception {
-        String url = "http://localhost:8080/receive/" + this.shareId;
-        HttpGet get = new HttpGet(url);
+        Map<String, Object> responseMap = WebUtility.receiveRequest(this.shareId);
 
-        try (CloseableHttpClient client = HttpClients.createDefault()) {
-            HttpResponse response = client.execute(get);
-            HttpEntity responseEntity = response.getEntity();
+        String filename = (String) responseMap.get("filename");
+        byte[] fileBytes = ConversionUtility.byteArrayFromBase64((String) responseMap.get("fileBytes"));
+        byte[] ivBytes = ConversionUtility.byteArrayFromBase64((String) responseMap.get("ivBytes"));
 
-            if (response.getStatusLine().getStatusCode() != 200) {
-                System.out.println("Failed to receive file: " + response.getStatusLine().getReasonPhrase());
-                throw new RuntimeException("Failed to receive file: " + response.getStatusLine().getReasonPhrase());
+        File keyFile = new File(this.keyPath);
+        int[][] key = CryptoUtility.readSymmetricKey(keyFile);
+
+        byte[] decryptedFileBytes = CryptoUtility.decrypt(fileBytes, key, ivBytes);
+
+        String directory = Globals.getDefaultDirectory() + "/downloaded/";
+        File dir = new File(directory);
+        directory = dir.getAbsolutePath();
+        if (!dir.exists()) {
+            if (!dir.mkdir()) {
+                throw new RuntimeException("Failed to create directory: " + directory);
             }
-
-            System.out.println("File received successfully");
-            ObjectMapper mapper = new ObjectMapper();
-            Map<String, Object> responseMap = mapper.readValue(EntityUtils.toString(responseEntity), new TypeReference<>() {
-            });
-
-            String filename = (String) responseMap.get("filename");
-            byte[] fileBytes = ConversionUtility.byteArrayFromBase64((String) responseMap.get("fileBytes"));
-            byte[] ivBytes = ConversionUtility.byteArrayFromBase64((String) responseMap.get("ivBytes"));
-
-            File keyFile = new File(this.keyPath);
-            int[][] key = CryptoUtility.readSymmetricKey(keyFile);
-
-            byte[] decryptedFileBytes = CryptoUtility.decrypt(fileBytes, key, ivBytes);
-
-            String directory = Globals.getDefaultDirectory() + "/downloaded/";
-            File dir = new File(directory);
-            directory = dir.getAbsolutePath();
-            if (!dir.exists()) {
-                if (!dir.mkdir()) {
-                    throw new RuntimeException("Failed to create directory: " + directory);
-                }
-            }
-
-            FileUtility.writeFile(decryptedFileBytes, directory + "/" + filename);
-
-            return directory;
         }
+
+        FileUtility.writeFile(decryptedFileBytes, directory + "/" + filename);
+
+        return directory;
     }
 }

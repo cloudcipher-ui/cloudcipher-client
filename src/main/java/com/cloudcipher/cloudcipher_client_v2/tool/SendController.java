@@ -2,7 +2,7 @@ package com.cloudcipher.cloudcipher_client_v2.tool;
 
 import com.cloudcipher.cloudcipher_client_v2.Globals;
 import com.cloudcipher.cloudcipher_client_v2.file.model.ShareResponse;
-import com.cloudcipher.cloudcipher_client_v2.tool.tasks.SendTask;
+import com.cloudcipher.cloudcipher_client_v2.tool.tasks.ShareLocalTask;
 import com.cloudcipher.cloudcipher_client_v2.utility.FileUtility;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
@@ -22,7 +22,7 @@ public class SendController extends BaseController {
             return;
         }
 
-        Task<ShareResponse> sendTask = new SendTask(selectedFilePath, selectedKeyPath);
+        Task<ShareResponse> sendTask = new ShareLocalTask(selectedFilePath, selectedKeyPath);
 
         Button button = (Button) event.getSource();
         button.setDisable(true);

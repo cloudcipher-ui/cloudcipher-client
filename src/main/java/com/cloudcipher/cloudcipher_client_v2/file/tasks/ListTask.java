@@ -1,7 +1,6 @@
 package com.cloudcipher.cloudcipher_client_v2.file.tasks;
 
 import javafx.concurrent.Task;
-import org.apache.http.entity.mime.MultipartEntityBuilder;
 
 import com.cloudcipher.cloudcipher_client_v2.utility.WebUtility;
 
@@ -20,11 +19,6 @@ public class ListTask extends Task<List<Map<String, String>>> {
 
     @Override
     protected List<Map<String, String>> call() {
-        String url = WebUtility.getServerUrl() + "/list";
-        MultipartEntityBuilder builder = MultipartEntityBuilder.create()
-                .addTextBody("username", this.username)
-                .addTextBody("token", this.token);
-
-        return WebUtility.listRequest(url, builder);
+        return WebUtility.listRequest(this.username, this.token);
     }
 }
