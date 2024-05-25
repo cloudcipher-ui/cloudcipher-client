@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox alignment="TOP_CENTER" spacing="32.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cloudcipher.cloudcipher_client.tool.EncryptController">
+   <VBox alignment="CENTER" prefHeight="70.0" prefWidth="400.0" spacing="8.0">
+      <Label fx:id="fileLabel" alignment="CENTER" prefHeight="20.0" prefWidth="400.0" textAlignment="CENTER" textOverrun="CENTER_WORD_ELLIPSIS" wrapText="true" />
+      <Button mnemonicParsing="false" onAction="#handleSelectFileButtonClick" prefHeight="20.0" prefWidth="150.0" text="Select your file">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
+   </VBox>
+   <VBox alignment="CENTER" layoutX="10.0" layoutY="110.0" prefHeight="70.0" prefWidth="400.0" spacing="8.0">
+      <Label fx:id="keyLabel" alignment="CENTER" prefHeight="20.0" prefWidth="400.0" textAlignment="CENTER" textOverrun="CENTER_WORD_ELLIPSIS" wrapText="true" />
+      <Button mnemonicParsing="false" onAction="#handleSelectKeyButtonClick" prefHeight="20.0" prefWidth="150.0" text="Select your key file">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
+   </VBox>
+   <VBox alignment="CENTER" layoutX="42.0" layoutY="190.0" prefHeight="70.0" prefWidth="400.0" spacing="8.0">
+      <Label fx:id="errorLabel" alignment="CENTER" prefHeight="20.0" prefWidth="400.0" textAlignment="CENTER" textFill="RED" textOverrun="CENTER_WORD_ELLIPSIS" wrapText="true" />
+      <Button mnemonicParsing="false" onAction="#handleEncryptButtonClick" prefHeight="20.0" prefWidth="150.0" styleClass="action-button" text="Encrypt" textFill="WHITE">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
+   </VBox>
+</VBox>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+ <VBox stylesheets="@../css/Common.css" alignment="CENTER" prefHeight="300.0" prefWidth="800.0" spacing="20.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cloudcipher.cloudcipher_client.authentication.LoginController">
+     <padding>
+         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+     </padding>
+     <TextField fx:id="loginUsername" maxWidth="400.0" onAction="#handleLoginButtonClick" promptText="Username" />
+     <PasswordField fx:id="loginPassword" maxWidth="400.0" onAction="#handleLoginButtonClick" promptText="Password" />
+     <Label fx:id="errorLabel" alignment="CENTER" managed="false" prefHeight="17.0" text="Error" textAlignment="CENTER" textFill="RED" visible="false" />
+     <ProgressIndicator fx:id="spinner" managed="false" prefHeight="77.0" prefWidth="77.0" visible="false" />
+     <Button fx:id="loginButton" mnemonicParsing="false" onAction="#handleLoginButtonClick" styleClass="action-button" text="Login" prefHeight="20.0" prefWidth="150.0" />
+     <Hyperlink onAction="#handleRegisterLinkClick" text="Don't have an account?" />
+ </VBox>

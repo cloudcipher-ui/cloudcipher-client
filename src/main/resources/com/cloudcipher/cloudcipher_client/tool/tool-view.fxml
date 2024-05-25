@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefWidth="800.0" stylesheets="@../css/Common.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cloudcipher.cloudcipher_client.tool.ToolController">
+    <VBox layoutX="227.0" layoutY="51.0" prefWidth="250.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+        </padding>
+        <ScrollPane fitToWidth="true" hbarPolicy="NEVER" VBox.vgrow="ALWAYS">
+            <VBox.margin>
+                <Insets bottom="10.0" left="5.0" top="15.0" />
+            </VBox.margin>
+            <padding>
+                <Insets right="10.0" />
+            </padding>
+            <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="16.0">
+                <ToggleButton styleClass="toggle-button" fx:id="encryptToggleButton" mnemonicParsing="false" prefHeight="35.0" prefWidth="215.0" text="Encrypt">
+                    <padding>
+                        <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                    </padding>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+                </ToggleButton>
+                <ToggleButton styleClass="toggle-button" fx:id="decryptToggleButton" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="215.0" text="Decrypt">
+                    <padding>
+                        <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                    </padding>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+                </ToggleButton>
+                <ToggleButton styleClass="toggle-button" fx:id="sendToggleButton" layoutX="10.0" layoutY="61.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="215.0" text="Send">
+                    <padding>
+                        <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                    </padding>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+                </ToggleButton>
+                <ToggleButton styleClass="toggle-button" fx:id="receiveToggleButton" layoutX="10.0" layoutY="112.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="215.0" text="Receive">
+                    <padding>
+                        <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                    </padding>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+                </ToggleButton>
+                <ToggleButton styleClass="toggle-button" fx:id="keyToggleButton" layoutX="10.0" layoutY="112.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="215.0" text="Key">
+                    <padding>
+                        <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                    </padding>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+                </ToggleButton>
+            </VBox>
+        </ScrollPane>
+    </VBox>
+    <StackPane fx:id="contentPane" layoutX="252.0" prefWidth="550.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="250.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+</AnchorPane>
