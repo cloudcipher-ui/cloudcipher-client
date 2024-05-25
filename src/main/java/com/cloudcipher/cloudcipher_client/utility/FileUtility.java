@@ -97,7 +97,12 @@ public class FileUtility {
 
                 switch (parts[0]) {
                     case "defaultDirectory":
-                        Globals.setDefaultDirectory(parts[1]);
+                        File dir = new File(parts[1]);
+                        if (dir.exists()) {
+                            Globals.setDefaultDirectory(parts[1]);
+                        } else {
+                            Globals.setDefaultDirectory(null);
+                        }
                         break;
                     case "username":
                         Globals.setUsername(parts[1]);
@@ -152,6 +157,20 @@ public class FileUtility {
             writer.write(ConversionUtility.bytesToHex(keyBytes[0]) + "\n");
             writer.write(ConversionUtility.bytesToHex(keyBytes[1]) + "\n");
             writer.write(ConversionUtility.bytesToHex(keyBytes[2]));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void saveDefaultDirectory(String selectedDirectory) {
+        Globals.setDefaultDirectory(selectedDirectory);
+        FileUtility.createDirectory(selectedDirectory + "/downloaded");
+        FileUtility.createDirectory(selectedDirectory + "/encrypted");
+        FileUtility.createDirectory(selectedDirectory + "/decrypted");
+        FileUtility.createDirectory(selectedDirectory + "/shared");
+
+        try {
+            FileUtility.saveConfig();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

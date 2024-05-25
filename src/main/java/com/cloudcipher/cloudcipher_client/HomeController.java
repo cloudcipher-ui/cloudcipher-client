@@ -8,10 +8,14 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class HomeController implements Initializable {
@@ -71,5 +75,20 @@ public class HomeController implements Initializable {
         FXMLLoader fxmlLoader = new FXMLLoader(CloudCipherClient.class.getResource("tool/tool-view.fxml"));
         Parent view = fxmlLoader.load();
         localToolsPane.getChildren().add(view);
+    }
+
+    public void handleSettingButtonClick() {
+        Stage stage = new Stage();
+        FXMLLoader fxmlLoader = new FXMLLoader(CloudCipherClient.class.getResource("setting-view.fxml"));
+        try {
+            Scene scene = new Scene(fxmlLoader.load());
+            stage.setResizable(false);
+            stage.getIcons().add(new Image(Objects.requireNonNull(CloudCipherClient.class.getResourceAsStream("logo.png"))));
+            stage.setTitle("Settings");
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

@@ -34,12 +34,7 @@ public class OnboardingController {
     }
 
     public void handleContinueButtonClick() throws IOException {
-        Globals.setDefaultDirectory(selectedDirectory);
-        FileUtility.saveConfig();
-        FileUtility.createDirectory(selectedDirectory + "/downloaded");
-        FileUtility.createDirectory(selectedDirectory + "/encrypted");
-        FileUtility.createDirectory(selectedDirectory + "/decrypted");
-        FileUtility.createDirectory(selectedDirectory + "/shared");
+        FileUtility.saveDefaultDirectory(selectedDirectory);
 
         Stage primaryStage =  Globals.getPrimaryStage();
         FXMLLoader fxmlLoader = new FXMLLoader(CloudCipherClient.class.getResource("home-view.fxml"));

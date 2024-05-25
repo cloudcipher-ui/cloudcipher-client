@@ -1,20 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="400" minWidth="800" prefHeight="400.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cloudcipher.cloudcipher_client.HomeController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="400" minWidth="800" prefHeight="400.0"
+            prefWidth="800.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.cloudcipher.cloudcipher_client.HomeController">
     <BorderPane prefHeight="400.0" prefWidth="800.0">
         <top>
-            <Label alignment="CENTER" prefHeight="40.0" prefWidth="800.0" text="CloudCipher" textAlignment="CENTER" BorderPane.alignment="CENTER" />
+            <StackPane alignment="CENTER_RIGHT">
+                <Label alignment="CENTER" prefHeight="40.0" prefWidth="800.0" text="CloudCipher"
+                       textAlignment="CENTER"/>
+                <Button contentDisplay="GRAPHIC_ONLY" graphicTextGap="0.0" mnemonicParsing="false"
+                        onAction="#handleSettingButtonClick" style="-fx-background-color: transparent;">
+                    <graphic>
+                        <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                            <Image url="@icons/cog-solid-24.png"/>
+                            <cursor>
+                                <Cursor fx:constant="HAND"/>
+                            </cursor>
+                        </ImageView>
+                    </graphic>
+                    <cursor>
+                        <Cursor fx:constant="HAND"/>
+                    </cursor>
+                    <StackPane.margin>
+                        <Insets right="4.0"/>
+                    </StackPane.margin>
+                </Button>
+            </StackPane>
         </top>
         <center>
             <TabPane prefHeight="300.0" prefWidth="800.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
                 <Tab text="CloudStorage">
-                    <Pane fx:id="cloudStoragePane" prefHeight="300.0" prefWidth="800.0" />
+                    <Pane fx:id="cloudStoragePane" prefHeight="300.0" prefWidth="800.0"/>
                 </Tab>
                 <Tab text="Local Tools">
-                    <Pane fx:id="localToolsPane" prefHeight="300.0" prefWidth="800.0" />
+                    <Pane fx:id="localToolsPane" prefHeight="300.0" prefWidth="800.0"/>
                 </Tab>
             </TabPane>
         </center>

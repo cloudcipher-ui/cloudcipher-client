@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minWidth="500" prefWidth="500.0" stylesheets="@css/Common.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cloudcipher.cloudcipher_client.SettingController">
+   <BorderPane layoutY="-1.0" prefWidth="500.0">
+      <center>
+          <VBox alignment="CENTER" prefWidth="500.0">
+              <padding>
+                  <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+              </padding>
+              <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="16.0">
+                  <Button minWidth="120.0" mnemonicParsing="false" onAction="#handleChangeDirectoryButtonClick" text="Change Directory">
+                  <cursor>
+                     <Cursor fx:constant="HAND" />
+                  </cursor></Button>
+                  <Label fx:id="selectedDirectoryLabel" textOverrun="CENTER_WORD_ELLIPSIS" />
+              </HBox>
+          </VBox>
+      </center>
+      <bottom>
+          <HBox alignment="CENTER" prefHeight="60.0" prefWidth="500.0" BorderPane.alignment="CENTER">
+              <Button minHeight="25.0" minWidth="100.0" mnemonicParsing="false" onAction="#handleCloseButtonClick" text="Close">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Button>
+          </HBox>
+      </bottom>
+   </BorderPane>
+</AnchorPane>
