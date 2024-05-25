@@ -1,6 +1,6 @@
 package com.cloudcipher.cloudcipher_client;
 
-import javafx.stage.Window;
+import javafx.stage.Stage;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -30,12 +30,11 @@ public class Globals {
 
     @Getter
     @Setter
-    private static Window primaryStage;
+    private static Stage primaryStage;
 
     @Getter
     private static long maxSize = 1024 * 1024 * 1024L;
 
     @Getter
     private static String serverUrl = "https://3.215.250.196:8080/";
-//    private static String serverUrl = "http://localhost:8080/";
 }

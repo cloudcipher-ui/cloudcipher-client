@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="400" minWidth="800" prefHeight="400.0" prefWidth="800.0" stylesheets="@css/Common.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cloudcipher.cloudcipher_client.OnboardingController">
+    <BorderPane prefHeight="400.0" prefWidth="800.0">
+        <top>
+            <Label alignment="CENTER" prefHeight="100.0" prefWidth="800.0" text="Welcome to CloudCipher!" textAlignment="CENTER" BorderPane.alignment="CENTER">
+            <font>
+               <Font size="36.0" />
+            </font></Label>
+        </top>
+        <center>
+            <VBox alignment="CENTER" spacing="8.0">
+                <Label text="Please select a default directory for CloudCipher to use" />
+                <Label fx:id="selectedDirectoryLabel" />
+                <Button mnemonicParsing="false" onAction="#handleSelectDirectoryButtonClick" prefHeight="25.0" text="Select Directory">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Button>
+            </VBox>
+        </center>
+        <bottom>
+            <VBox alignment="CENTER" prefHeight="80.0" prefWidth="800.0" spacing="8.0">
+                <Button fx:id="continueButton" disable="true" minWidth="100.0" mnemonicParsing="false" onAction="#handleContinueButtonClick" prefHeight="25.0" styleClass="action-button" text="Continue" BorderPane.alignment="CENTER" />
+            </VBox>
+        </bottom>
+    </BorderPane>
+</AnchorPane>
