@@ -1,14 +1,6 @@
-module com.cloudcipher.cloudcipher_client_v2 {
-    requires javafx.controls;
+module com.cloudcipher.cloudcipher_client {
     requires javafx.fxml;
-    requires javafx.web;
 
-    requires org.controlsfx.controls;
-    requires com.dlsc.formsfx;
-    requires net.synedra.validatorfx;
-    requires org.kordamp.ikonli.javafx;
-    requires org.kordamp.bootstrapfx.core;
-    requires eu.hansolo.tilesfx;
     requires static lombok;
     requires com.fasterxml.jackson.core;
     requires com.fasterxml.jackson.databind;
@@ -17,18 +9,18 @@ module com.cloudcipher.cloudcipher_client_v2 {
     requires org.apache.httpcomponents.httpmime;
     requires atlantafx.base;
 
-    opens com.cloudcipher.cloudcipher_client_v2 to javafx.fxml;
-    exports com.cloudcipher.cloudcipher_client_v2;
+    opens com.cloudcipher.cloudcipher_client to javafx.fxml;
+    exports com.cloudcipher.cloudcipher_client;
 
-    opens com.cloudcipher.cloudcipher_client_v2.authentication to javafx.fxml;
-    exports com.cloudcipher.cloudcipher_client_v2.authentication;
+    opens com.cloudcipher.cloudcipher_client.authentication to javafx.fxml;
+    exports com.cloudcipher.cloudcipher_client.authentication;
 
-    opens com.cloudcipher.cloudcipher_client_v2.authentication.model to javafx.fxml;
-    exports com.cloudcipher.cloudcipher_client_v2.authentication.model;
+    opens com.cloudcipher.cloudcipher_client.authentication.model to javafx.fxml;
+    exports com.cloudcipher.cloudcipher_client.authentication.model;
 
-    opens com.cloudcipher.cloudcipher_client_v2.file to javafx.fxml;
-    exports com.cloudcipher.cloudcipher_client_v2.file;
+    opens com.cloudcipher.cloudcipher_client.file to javafx.fxml;
+    exports com.cloudcipher.cloudcipher_client.file;
 
-    opens com.cloudcipher.cloudcipher_client_v2.tool to javafx.fxml;
-    exports com.cloudcipher.cloudcipher_client_v2.tool;
+    opens com.cloudcipher.cloudcipher_client.tool to javafx.fxml;
+    exports com.cloudcipher.cloudcipher_client.tool;
 }
