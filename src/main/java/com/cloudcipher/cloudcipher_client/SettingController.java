@@ -11,12 +11,15 @@ import javafx.stage.Stage;
 
 import java.io.File;
 import java.net.URL;
+import java.nio.file.Path;
 import java.util.ResourceBundle;
 
 public class SettingController implements Initializable {
 
     @FXML
     private Label selectedDirectoryLabel;
+    @FXML
+    private Label configLabel;
 
     private String selectedDirectory;
     private final DirectoryChooser directoryChooser = new DirectoryChooser();
@@ -27,6 +30,9 @@ public class SettingController implements Initializable {
 
         directoryChooser.setInitialDirectory(new File(selectedDirectory));
         selectedDirectoryLabel.setText(selectedDirectory);
+
+        Path path = Path.of(System.getProperty("user.home") + "/cloudcipher/");
+        configLabel.setText(path.toString());
     }
 
 
@@ -45,5 +51,9 @@ public class SettingController implements Initializable {
         Button button = (Button) event.getSource();
         Stage stage = (Stage) button.getScene().getWindow();
         stage.close();
+    }
+
+    public void handleConfigButtonClick() {
+        FileUtility.openDirectory(System.getProperty("user.home") + "/cloudcipher/");
     }
 }
