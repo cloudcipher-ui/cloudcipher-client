@@ -5,16 +5,16 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox stylesheets="@../css/Common.css" alignment="TOP_CENTER" prefHeight="300.0" prefWidth="200" spacing="8.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cloudcipher.cloudcipher_client.file.SideFileMenuController">
+<VBox alignment="TOP_CENTER" prefHeight="300.0" prefWidth="200" spacing="8.0" stylesheets="@../css/Common.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cloudcipher.cloudcipher_client.file.SideFileMenuController">
     <VBox alignment="CENTER" prefHeight="250.0" spacing="8.0">
         <Label fx:id="fileNameLabel" alignment="CENTER" managed="false" textAlignment="CENTER" textOverrun="CENTER_WORD_ELLIPSIS" visible="false" />
-        <Button styleClass="action-button" fx:id="uploadButton" alignment="CENTER" disable="true" focusTraversable="false" managed="false" mnemonicParsing="false" onAction="#handleUploadButtonClick" prefHeight="25.0" prefWidth="146.0" text="Upload" textAlignment="CENTER" visible="false">
+        <Button fx:id="uploadButton" alignment="CENTER" disable="true" focusTraversable="false" managed="false" minWidth="146.0" mnemonicParsing="false" onAction="#handleUploadButtonClick" prefHeight="25.0" styleClass="action-button" text="Upload" textAlignment="CENTER" visible="false">
             <cursor>
                 <Cursor fx:constant="HAND" />
             </cursor>
         </Button>
         <Label fx:id="fileSizeLabel" alignment="CENTER" managed="false" textAlignment="CENTER" textOverrun="CENTER_WORD_ELLIPSIS" visible="false" />
-        <Button styleClass="action-button" fx:id="fileButton" mnemonicParsing="false" onAction="#handleFileButtonClick" prefHeight="25.0" prefWidth="146.0" text="Upload New File">
+        <Button fx:id="fileButton" minWidth="146.0" mnemonicParsing="false" onAction="#handleFileButtonClick" prefHeight="25.0" text="Upload New File">
             <cursor>
                 <Cursor fx:constant="HAND" />
             </cursor>
@@ -25,8 +25,11 @@
                 <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
             </padding>
             <Label text="You have not set your symmetric key" textAlignment="CENTER" textOverrun="CENTER_ELLIPSIS" wrapText="true" />
-            <Button mnemonicParsing="false" onAction="#handleGenerateButtonClick" prefHeight="25.0" prefWidth="100.0" text="Generate Key" />
-            <Button mnemonicParsing="false" onAction="#handleImportButtonClick" prefHeight="25.0" prefWidth="100.0" text="Import Key" />
+            <Button minWidth="100.0" mnemonicParsing="false" onAction="#handleGenerateButtonClick" prefHeight="25.0" text="Generate Key" />
+            <Button minWidth="100.0" mnemonicParsing="false" onAction="#handleImportButtonClick" prefHeight="25.0" text="Import Key" />
+         <VBox.margin>
+            <Insets top="8.0" />
+         </VBox.margin>
         </VBox>
     </VBox>
     <VBox alignment="CENTER" prefHeight="40.0">

@@ -45,6 +45,9 @@ public class SideFileMenuController implements Initializable {
         if (Globals.getKey() != null) {
             createKeyView.setVisible(false);
             createKeyView.setManaged(false);
+        } else {
+            fileButton.setDisable(true);
+            fileButton.setVisible(false);
         }
         fileChooser.setInitialDirectory(new File(Globals.getDefaultDirectory()));
     }
@@ -161,6 +164,9 @@ public class SideFileMenuController implements Initializable {
 
         createKeyView.setVisible(false);
         createKeyView.setManaged(false);
+
+        fileButton.setDisable(false);
+        fileButton.setVisible(true);
     }
 
     @FXML
@@ -173,6 +179,9 @@ public class SideFileMenuController implements Initializable {
 
             createKeyView.setVisible(false);
             createKeyView.setManaged(false);
+
+            fileButton.setDisable(false);
+            fileButton.setVisible(true);
         }
     }
 
