@@ -1,6 +1,5 @@
 package com.cloudcipher.cloudcipher_client.component;
 
-import com.cloudcipher.cloudcipher_client.Globals;
 import com.cloudcipher.cloudcipher_client.utility.FileUtility;
 import javafx.geometry.Insets;
 import javafx.scene.Node;

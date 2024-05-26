@@ -1,6 +1,5 @@
 package com.cloudcipher.cloudcipher_client.tool;
 
-import com.cloudcipher.cloudcipher_client.Globals;
 import com.cloudcipher.cloudcipher_client.component.FileDialog;
 import com.cloudcipher.cloudcipher_client.tool.tasks.EncryptTask;
 import javafx.concurrent.Task;

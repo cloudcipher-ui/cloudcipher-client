@@ -7,7 +7,6 @@ import com.cloudcipher.cloudcipher_client.tool.tasks.ShareLocalTask;
 import com.cloudcipher.cloudcipher_client.utility.FileUtility;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
-import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
