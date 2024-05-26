@@ -1,14 +1,17 @@
 package com.cloudcipher.cloudcipher_client.tool;
 
 import com.cloudcipher.cloudcipher_client.Globals;
+import com.cloudcipher.cloudcipher_client.component.FileDialog;
 import com.cloudcipher.cloudcipher_client.file.model.ShareResponse;
 import com.cloudcipher.cloudcipher_client.tool.tasks.ShareLocalTask;
 import com.cloudcipher.cloudcipher_client.utility.FileUtility;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ProgressIndicator;
+import javafx.geometry.Insets;
+import javafx.scene.control.*;
+import javafx.scene.input.Clipboard;
+import javafx.scene.input.ClipboardContent;
+import javafx.scene.layout.VBox;
 
 public class SendController extends BaseController {
 
@@ -60,12 +63,26 @@ public class SendController extends BaseController {
             String keyFileName = shareId + "_" + filename.split("\\.")[0] + ".key";
             FileUtility.writeKeyFile(newKey, specificDirectory + "/" + keyFileName);
 
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Success: File Sent");
-            alert.setHeaderText(null);
-            alert.setContentText("File sent successfully. Share ID: " + shareId);
-            alert.showAndWait();
+            Label copySuccess = new Label("Copied to clipboard");
+            copySuccess.setStyle("-fx-text-fill: green;");
+            copySuccess.setVisible(false);
+
+            Label shareLinkLabel = new Label("Share ID (click to copy):\n" + shareId);
+            shareLinkLabel.setOnMouseClicked(e3 -> {
+                final Clipboard clipboard = Clipboard.getSystemClipboard();
+                final ClipboardContent content = new ClipboardContent();
+                content.putString(shareId);
+                clipboard.setContent(content);
+
+                copySuccess.setVisible(true);
+            });
+
+
+            Label textLabel = new Label(filename + " has been shared. Would you like to open the directory?");
+            FileDialog dialog = new FileDialog("Share ID for " + filename, specificDirectory, new VBox(shareLinkLabel, copySuccess, textLabel));
+            dialog.showAndWait();
         });
+
         sendTask.setOnFailed(e -> {
             button.setDisable(false);
             button.setText("Send");

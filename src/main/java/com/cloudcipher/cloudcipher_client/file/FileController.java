@@ -3,6 +3,7 @@ package com.cloudcipher.cloudcipher_client.file;
 import com.cloudcipher.cloudcipher_client.CloudCipherClient;
 import com.cloudcipher.cloudcipher_client.Globals;
 import com.cloudcipher.cloudcipher_client.HomeController;
+import com.cloudcipher.cloudcipher_client.component.FileDialog;
 import com.cloudcipher.cloudcipher_client.file.model.DownloadResponse;
 import com.cloudcipher.cloudcipher_client.file.model.ShareResponse;
 import com.cloudcipher.cloudcipher_client.file.tasks.DeleteTask;
@@ -208,11 +209,9 @@ public class FileController implements Initializable {
                         copySuccess.setVisible(true);
                     });
 
-                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setHeaderText(null);
-                    alert.setTitle("Share ID for " + filename);
-                    alert.getDialogPane().setContent(new VBox(shareLinkLabel, copySuccess));
-                    alert.showAndWait();
+                    Label textLabel = new Label(filename + " has been shared. Would you like to open the directory?");
+                    FileDialog dialog = new FileDialog("Share ID for " + filename, specificDirectory, new VBox(shareLinkLabel, copySuccess, textLabel));
+                    dialog.showAndWait();
 
                 } catch (Exception e) {
                     Label exclamation = new Label("!");
@@ -318,6 +317,9 @@ public class FileController implements Initializable {
 
                     fileLabel.setGraphic(null);
 
+                    FileDialog dialog = new FileDialog("Downloaded " + filename, Globals.getDefaultDirectory() + "/downloaded", filename + " has been downloaded to your default directory. Would you like to open the directory?");
+                    dialog.showAndWait();
+
                 } catch (Exception e) {
                     Label exclamation = new Label("!");
                     exclamation.setStyle("-fx-text-fill: red;");
@@ -330,6 +332,7 @@ public class FileController implements Initializable {
                     }
                 });
             });
+
             downloadTask.setOnFailed(event2 -> {
                 Label exclamation = new Label("!");
                 exclamation.setStyle("-fx-text-fill: red;");

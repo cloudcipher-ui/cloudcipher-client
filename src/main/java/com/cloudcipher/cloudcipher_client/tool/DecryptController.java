@@ -1,5 +1,7 @@
 package com.cloudcipher.cloudcipher_client.tool;
 
+import com.cloudcipher.cloudcipher_client.Globals;
+import com.cloudcipher.cloudcipher_client.component.FileDialog;
 import com.cloudcipher.cloudcipher_client.tool.tasks.DecryptTask;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
@@ -35,12 +37,10 @@ public class DecryptController extends BaseController {
             button.setGraphic(null);
 
             String directory = decryptTask.getValue();
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Success: File decrypted");
-            alert.setHeaderText(null);
-            alert.setContentText("Decrypted file saved to: " + directory);
-            alert.showAndWait();
+            FileDialog dialog = new FileDialog("Decrypted" , directory, "Your file has been decrypted to your default directory. Would you like to open the directory?");
+            dialog.showAndWait();
         });
+
         decryptTask.setOnFailed(e -> {
             button.setDisable(false);
             button.setText("Decrypt");

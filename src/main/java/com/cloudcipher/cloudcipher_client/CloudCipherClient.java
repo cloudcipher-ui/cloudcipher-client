@@ -21,6 +21,7 @@ public class CloudCipherClient extends Application {
 
         Application.setUserAgentStylesheet(new CupertinoLight().getUserAgentStylesheet());
         Globals.setPrimaryStage(stage);
+        Globals.setHostServices(getHostServices());
 
         FXMLLoader fxmlLoader;
         if (Globals.getDefaultDirectory() == null) {

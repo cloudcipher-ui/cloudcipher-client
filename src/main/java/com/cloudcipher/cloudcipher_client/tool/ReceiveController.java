@@ -1,5 +1,7 @@
 package com.cloudcipher.cloudcipher_client.tool;
 
+import com.cloudcipher.cloudcipher_client.Globals;
+import com.cloudcipher.cloudcipher_client.component.FileDialog;
 import com.cloudcipher.cloudcipher_client.tool.tasks.ReceiveTask;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
@@ -40,11 +42,8 @@ public class ReceiveController extends BaseController {
             button.setGraphic(null);
 
             String directory = receiveTask.getValue();
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Success: File Received");
-            alert.setHeaderText(null);
-            alert.setContentText("Received file saved to: " + directory);
-            alert.showAndWait();
+            FileDialog dialog = new FileDialog("File Received", directory, "The file has been received to your default directory. Would you like to open the directory?");
+            dialog.showAndWait();
         });
         receiveTask.setOnFailed(e -> {
             button.setDisable(false);

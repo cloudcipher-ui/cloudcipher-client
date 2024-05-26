@@ -3,6 +3,8 @@ package com.cloudcipher.cloudcipher_client.utility;
 import com.cloudcipher.cloudcipher_client.Globals;
 
 import java.io.*;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class FileUtility {
 
@@ -174,5 +176,10 @@ public class FileUtility {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public static void openDirectory(String directory) {
+        Path part = Paths.get(directory);
+        Globals.getHostServices().showDocument(part.toUri().toString());
     }
 }

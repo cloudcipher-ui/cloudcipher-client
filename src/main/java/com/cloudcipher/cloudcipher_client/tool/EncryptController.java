@@ -1,5 +1,7 @@
 package com.cloudcipher.cloudcipher_client.tool;
 
+import com.cloudcipher.cloudcipher_client.Globals;
+import com.cloudcipher.cloudcipher_client.component.FileDialog;
 import com.cloudcipher.cloudcipher_client.tool.tasks.EncryptTask;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
@@ -33,11 +35,8 @@ public class EncryptController extends BaseController {
             button.setGraphic(null);
 
             String directory = encryptTask.getValue();
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Success: File Encrypted");
-            alert.setHeaderText(null);
-            alert.setContentText("Encrypted file saved to: " + directory);
-            alert.showAndWait();
+            FileDialog dialog = new FileDialog("Encrypted", directory, "Your file has been encrypted to your default directory. Would you like to open the directory?");
+            dialog.showAndWait();
         });
         encryptTask.setOnFailed(e -> {
             button.setDisable(false);
