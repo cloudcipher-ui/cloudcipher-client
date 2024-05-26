@@ -46,7 +46,5 @@ jobs:
           prerelease: true
           title: ${{ matrix.os }} Development Build
           files: |
-            ${{ env.DMG_PATH }}
             ./target/*.msi
-            ./target/*.dmg
             ./target/*.deb
