@@ -182,4 +182,15 @@ public class FileUtility {
         Path part = Paths.get(directory);
         Globals.getHostServices().showDocument(part.toUri().toString());
     }
+
+    public static void saveDurations(long[] durations, String filename) {
+        File durationsFile = new File(Globals.getDefaultDirectory() + "/" + filename);
+        try (FileWriter writer = new FileWriter(durationsFile)) {
+            for (long duration : durations) {
+                writer.write(duration + ",");
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

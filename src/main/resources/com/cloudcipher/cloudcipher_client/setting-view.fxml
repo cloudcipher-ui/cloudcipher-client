@@ -35,7 +35,7 @@
             </GridPane>
         </center>
         <bottom>
-            <HBox alignment="CENTER" prefHeight="80.0" prefWidth="500.0" BorderPane.alignment="CENTER">
+            <HBox alignment="CENTER" prefHeight="80.0" prefWidth="500.0" BorderPane.alignment="CENTER" spacing="8">
                 <Button minHeight="25.0" minWidth="100.0" mnemonicParsing="false" onAction="#handleCloseButtonClick" text="Close">
                     <cursor>
                         <Cursor fx:constant="HAND" />
