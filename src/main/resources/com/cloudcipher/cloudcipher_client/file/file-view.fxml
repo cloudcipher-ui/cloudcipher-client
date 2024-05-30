@@ -20,8 +20,8 @@
             </cursor>
         </Button>
     </VBox>
-    <HBox fx:id="contentPane" prefHeight="400.0" prefWidth="800.0">
-        <GridPane prefHeight="400.0" prefWidth="600.0" HBox.hgrow="ALWAYS">
+    <HBox fx:id="contentPane" prefHeight="300.0" prefWidth="800.0">
+        <GridPane prefHeight="300.0" prefWidth="600.0" HBox.hgrow="ALWAYS">
             <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="500.0" minWidth="10.0" prefWidth="500.0" />
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="10.0" prefWidth="100.0" />
@@ -41,7 +41,7 @@
             <padding>
                <Insets left="8.0" />
             </padding></Label>
-            <ScrollPane hbarPolicy="NEVER" prefWidth="600.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="1">
+            <ScrollPane hbarPolicy="NEVER" prefHeight="100.0" prefWidth="600.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="1">
                 <GridPane fx:id="fileListGrid">
                     <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="500.0" minWidth="10.0" />
