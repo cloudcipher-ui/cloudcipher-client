@@ -21,8 +21,11 @@ public class DownloadTask extends Task<DownloadResponse> {
     protected DownloadResponse call() {
         DownloadResponse response = new DownloadResponse();
 
+        long startTime = System.nanoTime();
         byte[] fileBytes = download(this.filename);
         byte[] ivBytes = download("iv/" + this.filename);
+        long endTime = System.nanoTime();
+        System.out.println("Download Time: " + (endTime - startTime) + " ns");
 
         response.setFileBytes(fileBytes);
         response.setIvBytes(ivBytes);

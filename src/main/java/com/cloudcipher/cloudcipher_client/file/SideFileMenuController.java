@@ -18,6 +18,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.concurrent.atomic.AtomicLong;
 
 public class SideFileMenuController implements Initializable {
 
@@ -95,6 +96,26 @@ public class SideFileMenuController implements Initializable {
 
     @FXML
     protected void handleUploadButtonClick() {
+        AtomicLong startTime = new AtomicLong();
+        AtomicLong endTime = new AtomicLong();
+
+        ProgressIndicator uploadSpinner = new ProgressIndicator();
+        uploadSpinner.setStyle("-fx-progress-color: #fff;");
+        uploadSpinner.setVisible(true);
+        uploadSpinner.setManaged(true);
+        uploadSpinner.setProgress(-1);
+        uploadSpinner.setPrefSize(20, 20);
+
+        uploadButton.setGraphic(uploadSpinner);
+        uploadButton.setGraphicTextGap(5);
+        uploadButton.setText("Uploading...");
+
+        uploadButton.setDisable(true);
+        uploadButton.setOpacity(1);
+        uploadSpinner.setOpacity(1);
+
+        startTime.set(System.nanoTime());
+
         File file = new File(selectedFilePath);
         Task<String> uploadTask = new UploadTask(Globals.getUsername(), Globals.getToken(), file);
         uploadTask.setOnSucceeded(event -> {
@@ -117,6 +138,9 @@ public class SideFileMenuController implements Initializable {
             uploadButton.setText("Upload");
 
             fileController.refreshList();
+            endTime.set(System.nanoTime());
+
+            System.out.println("E2E Upload time: " + (endTime.get() - startTime.get() + " ns"));
         });
 
         uploadTask.setOnFailed(event -> {
@@ -137,20 +161,7 @@ public class SideFileMenuController implements Initializable {
             uploadButton.setText("Upload");
         });
 
-        ProgressIndicator uploadSpinner = new ProgressIndicator();
-        uploadSpinner.setStyle("-fx-progress-color: #fff;");
-        uploadSpinner.setVisible(true);
-        uploadSpinner.setManaged(true);
-        uploadSpinner.setProgress(-1);
-        uploadSpinner.setPrefSize(20, 20);
 
-        uploadButton.setGraphic(uploadSpinner);
-        uploadButton.setGraphicTextGap(5);
-        uploadButton.setText("Uploading...");
-
-        uploadButton.setDisable(true);
-        uploadButton.setOpacity(1);
-        uploadSpinner.setOpacity(1);
 
         Thread thread = new Thread(uploadTask);
         thread.start();

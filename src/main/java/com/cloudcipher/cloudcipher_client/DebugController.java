@@ -18,4 +18,18 @@ public class DebugController {
         DebugUtility.decryptTest();
         button.setDisable(false);
     }
+
+    public void handleRegenerateTestClick(ActionEvent actionEvent) throws Exception {
+        Button button = (Button) actionEvent.getSource();
+        button.setDisable(true);
+        DebugUtility.regenerateTest();
+        button.setDisable(false);
+    }
+
+    public void handleGenerateTestFilesClick(ActionEvent actionEvent) {
+        Button button = (Button) actionEvent.getSource();
+        button.setDisable(true);
+        DebugUtility.generateTestFiles();
+        button.setDisable(false);
+    }
 }

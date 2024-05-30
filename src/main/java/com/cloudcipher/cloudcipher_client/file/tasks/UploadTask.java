@@ -25,7 +25,11 @@ public class UploadTask extends Task<String> {
     @Override
     protected String call() {
         byte[] fileBytes = FileUtility.readFile(this.file);
+
+        long startTime = System.nanoTime();
         EncryptionResult result = CryptoUtility.encrypt(fileBytes, this.file.length(), Globals.getKey());
+        long endTime = System.nanoTime();
+        System.out.println("Encryption Time: " + (endTime - startTime) + " ns");
 
         long[][] encryptedFile = result.getEncryptedFile();
         byte[] encryptedFileBytes = ConversionUtility.longArrayToByteArray(encryptedFile);

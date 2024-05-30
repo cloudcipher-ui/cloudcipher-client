@@ -41,6 +41,12 @@
                         <Cursor fx:constant="HAND" />
                     </cursor>
                 </Button>
+
+                <Button minHeight="25.0" minWidth="100.0" mnemonicParsing="false" onAction="#handleDebugButtonClick" text="Debug">
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                </Button>
             </HBox>
         </bottom>
     </BorderPane>

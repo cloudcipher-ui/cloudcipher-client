@@ -25,7 +25,11 @@ public class ShareCloudTask extends Task<ShareResponse> {
 
     @Override
     protected ShareResponse call() throws Exception {
+        long startTime = System.nanoTime();
         RG regenerateData = CryptoUtility.regenerateKey((int) this.fileLength, Globals.getKey());
+        long endTime = System.nanoTime();
+        System.out.println("Regeneration Time: " + (endTime - startTime) + " ns");
+
         int[][] rg = regenerateData.getRg();
         int[][] newKey = regenerateData.getKey();
 

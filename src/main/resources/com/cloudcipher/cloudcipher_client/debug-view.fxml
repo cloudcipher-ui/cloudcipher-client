@@ -23,5 +23,21 @@
                 <Cursor fx:constant="HAND" />
             </cursor>
         </Button>
+        <Button onAction="#handleRegenerateTestClick" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="215.0" text="Regenerate">
+            <padding>
+                <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+            </padding>
+            <cursor>
+                <Cursor fx:constant="HAND" />
+            </cursor>
+        </Button>
+        <Button onAction="#handleGenerateTestFilesClick" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="215.0" text="Generate Files">
+            <padding>
+                <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+            </padding>
+            <cursor>
+                <Cursor fx:constant="HAND" />
+            </cursor>
+        </Button>
     </VBox>
 </AnchorPane>

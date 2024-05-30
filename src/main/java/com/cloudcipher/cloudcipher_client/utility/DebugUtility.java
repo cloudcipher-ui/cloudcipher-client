@@ -122,4 +122,43 @@ public class DebugUtility {
         FileUtility.saveDurations(durations, filename);
         System.out.println("=== Decryption test complete ===\n");
     }
+
+    public static void generateTestFiles() {
+        System.out.println("=== Generating test files ===");
+        for (int blockCount : BLOCK_COUNTS) {
+            byte[] fileBytes = createTestFile(blockCount);
+            FileUtility.saveDownload(fileBytes, blockCount + "_blocks.txt");
+        }
+        System.out.println("=== Test files generated ===\n");
+    }
+
+    public static void regenerateTest() throws Exception {
+        System.out.println("=== Starting regeneration test ===");
+        String filename = "regenerate_test.txt";
+        long[] durations = new long[BLOCK_COUNTS.length];
+
+        for (int i = 0; i < BLOCK_COUNTS.length; i++) {
+            int blockCount = BLOCK_COUNTS[i];
+            byte[] fileBytes = createTestFile(blockCount);
+
+            ArrayList<Long> localDurations = new ArrayList<>();
+            for (int j = 0; j < ITERATIONS; j++) {
+                long startTime = System.nanoTime();
+                CryptoUtility.regenerateKey(fileBytes.length, KEY);
+                long endTime = System.nanoTime();
+                localDurations.add(endTime - startTime);
+            }
+
+            long sum = 0;
+            for (long duration : localDurations) {
+                sum += duration;
+            }
+            durations[i] = sum / ITERATIONS;
+            System.out.println("Regeneration test for " + blockCount + " blocks complete");
+        }
+
+        // Saving the durations to a file
+        FileUtility.saveDurations(durations, filename);
+        System.out.println("=== Regeneration test complete ===\n");
+    }
 }

@@ -32,6 +32,7 @@ import java.net.URL;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.concurrent.atomic.AtomicLong;
 
 public class FileController implements Initializable {
 
@@ -167,6 +168,9 @@ public class FileController implements Initializable {
     }
 
     private MenuItem getShareItem(String filename, int fileSize, Label fileLabel, ContextMenu contextMenu) {
+        AtomicLong startTime = new AtomicLong();
+        AtomicLong endTime = new AtomicLong();
+
         MenuItem shareItem = new MenuItem("Share");
         shareItem.setOnAction(event -> {
             Task<ShareResponse> shareTask = new ShareCloudTask(Globals.getUsername(), Globals.getToken(), filename, fileSize);
@@ -208,6 +212,9 @@ public class FileController implements Initializable {
 
                         copySuccess.setVisible(true);
                     });
+
+                    endTime.set(System.nanoTime());
+                    System.out.println("E2E Share Time: " + (endTime.get() - startTime.get()) + " ns");
 
                     Label textLabel = new Label(filename + " has been shared. Would you like to open the directory?");
                     FileDialog dialog = new FileDialog("Share ID for " + filename, specificDirectory, new VBox(shareLinkLabel, copySuccess, textLabel));
@@ -251,11 +258,15 @@ public class FileController implements Initializable {
 
             Thread shareThread = new Thread(shareTask);
             shareThread.start();
+            startTime.set(System.nanoTime());
         });
         return shareItem;
     }
 
     private MenuItem getDeleteItem(String filename, Label fileLabel, ContextMenu contextMenu) {
+        AtomicLong startTime = new AtomicLong();
+        AtomicLong endTime = new AtomicLong();
+
         MenuItem deleteItem = new MenuItem("Delete");
         deleteItem.setOnAction(event -> {
             Task<Void> deleteTask = new DeleteTask(Globals.getUsername(), Globals.getToken(), filename);
@@ -268,6 +279,8 @@ public class FileController implements Initializable {
                         contextMenu.show(fileLabel, event3.getScreenX(), event3.getScreenY());
                     }
                 });
+                endTime.set(System.nanoTime());
+                System.out.println("E2E Delete Time: " + (endTime.get() - startTime.get()) + " ns");
             });
             deleteTask.setOnFailed(event2 -> {
                 Label exclamation = new Label("!");
@@ -294,11 +307,15 @@ public class FileController implements Initializable {
 
             Thread deleteThread = new Thread(deleteTask);
             deleteThread.start();
+            startTime.set(System.nanoTime());
         });
         return deleteItem;
     }
 
     private static MenuItem getDownloadItem(String filename, Label fileLabel, ContextMenu contextMenu) {
+        AtomicLong startTime = new AtomicLong();
+        AtomicLong endTime = new AtomicLong();
+
         MenuItem downloadItem = new MenuItem("Download");
         downloadItem.setOnAction(event -> {
             Task<DownloadResponse> downloadTask = new DownloadTask(Globals.getUsername(), Globals.getToken(), filename);
@@ -312,8 +329,14 @@ public class FileController implements Initializable {
                         key = response.getKey();
                     }
 
+                    long startDecryptTime = System.nanoTime();
                     byte[] fileBytes = CryptoUtility.decrypt(encryptedBytes, key, ivBytes);
+                    long endDecryptTime = System.nanoTime();
+                    System.out.println("Decrypt Time: " + (endDecryptTime - startDecryptTime) + " ns");
+
                     FileUtility.saveDownload(fileBytes, filename);
+                    endTime.set(System.nanoTime());
+                    System.out.println("E2E Download Time: " + (endTime.get() - startTime.get()) + " ns");
 
                     fileLabel.setGraphic(null);
 
@@ -358,6 +381,7 @@ public class FileController implements Initializable {
 
             Thread downloadThread = new Thread(downloadTask);
             downloadThread.start();
+            startTime.set(System.nanoTime());
         });
         return downloadItem;
     }
