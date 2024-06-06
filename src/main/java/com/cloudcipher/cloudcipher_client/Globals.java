@@ -37,7 +37,7 @@ public class Globals {
     private static long maxSize = 1024 * 1024 * 1024L;
 
     @Getter
-    private static String serverUrl = "https://3.215.250.196:8080/";
+    private static String serverUrl = "https://52.7.59.66:8080/";
 
     @Getter
     @Setter
